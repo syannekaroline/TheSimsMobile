@@ -48,14 +48,12 @@
 <h2><a name="authors">&#x1F465 Autores</a></h2>
   
 <!-- Syanne's Profile -->  
-<a href="https://github.com/oJordany/estanteVirtual"><img src="https://user-images.githubusercontent.com/84668196/178507721-c9f1533c-65ac-4f4e-9d8e-a1a343645571.png" width="180px" height="180px" align="left"></a> 
+<a href="https://github.com/syannekaroline"><img src="https://user-images.githubusercontent.com/84668196/178507721-c9f1533c-65ac-4f4e-9d8e-a1a343645571.png" width="180px" height="180px" align="left"></a> 
 <h1>Syanne Karoline Moreira Tavares</h1>
-<strong>Computer Science Student | Developer | intern at PROEX-UFPA</strong>
+<strong>Computer Science Student | Developer | intern at Serpro </strong>
 <br/><br/>
 <a href="https://instagram.com/syanne_karoline/" target="_blank"><img src="https://img.shields.io/badge/-Instagram-%23E4405F?style=for-the-badge&logo=instagram&logoColor=white" target="_blank"></a>
 •
 <a href = "mailto:syannekaroline@gmail.com"><img src="https://img.shields.io/badge/-Gmail-%23333?style=for-the-badge&logo=gmail&logoColor=white" target="_blank"></a>
 •
 <a href="https://www.linkedin.com/in/syanne-tavares-040b31225" target="_blank"><img src="https://img.shields.io/badge/-LinkedIn-%230077B5?style=for-the-badge&logo=linkedin&logoColor=white" target="_blank"></a>
-
-<!-- https://user-images.githubusercontent.com/84668196/178361787-8b90a4b3-a470-432e-bbdd-2170084aa5b5.mp4 -->
