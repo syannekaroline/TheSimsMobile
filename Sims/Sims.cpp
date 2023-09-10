@@ -148,9 +148,10 @@ void Sims::descansar()
     cout << "\nDescanso concluído!🔋\n";
 }
 
-string Sims::getColor(int color) const 
-{
+string Sims::getColor(int color ) const 
+{   
     // Recebe um valor inteiro color e retorna a string correspondente ao emoji da cor.
+    
     if ( color <= 1 || color<=9)
     {  
         switch (color) 
@@ -175,6 +176,5 @@ string Sims::getColor(int color) const
                 return "⬜";
         }
     }
-
     return "⬛";
 }

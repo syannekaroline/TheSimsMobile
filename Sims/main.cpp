@@ -23,6 +23,11 @@ int main() {
   meuSim.descansar();
   cout << "Usando metodo get para obter nova energia: " << meuSim.getEnergia() << "\n";
 
+  //Utilizando parâmetro default do construtor
+  cout << "\n=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=\n";
+  cout << "Sim com atributos personalizados utilizando parâmetro de energia default.\n";
+  Sims SimCiclano("Ciclano", "da silva",  'M' , 7);
+  SimCiclano.simVisaoGeral();
   return 0;
 
 }

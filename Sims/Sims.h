@@ -10,7 +10,7 @@ class Sims
     public:
         // construtores e destrutores sempre começam a parte pública da classe
         Sims(); // Construtor-> método chamado pra inicializar os atributos a classe
-        Sims(string,string,char,int,double); // declarando o construtor com parâmetros
+        Sims(string,string,char,int,double = 30); // declarando o construtor com parâmetros. Energia com valor default igual a 30
         ~Sims();//Destrutor -> relacionado a desalocaçao de memória 
 
         // declarando get e set -> acesso seguro na alteração dos atributos
