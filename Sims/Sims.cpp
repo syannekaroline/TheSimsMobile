@@ -10,13 +10,13 @@ using std::cout;
 
 // Construtor padrão -> inicializar objetos com valores padrão pré-definidos.
 Sims::Sims()
-: nome("Fulana"), sobrenome("da Silva"), genero('F'),tonalidadeDaPele(7),energia(20) 
+: nome("Fulana"), sobrenome("da Silva"), genero('F'),tonalidadeDaPele(7),energia(20),simCash(300),endereco("")
 {
     cout << "Inicializando Sim.\n";
 }
 
 // Construtor com com parâmetros -> permite a personalização dos atributos
-Sims::Sims(string nome, string sobrenome, char genero, int tonalidadeDaPele,double energia)
+Sims::Sims(string nome, string sobrenome, char genero, int tonalidadeDaPele,double energia,double simCash,string endereco)
 {
     cout << "Inicializando Sim.\n";
     setNome(nome);
@@ -24,8 +24,23 @@ Sims::Sims(string nome, string sobrenome, char genero, int tonalidadeDaPele,doub
     setGenero(genero);
     setTonalidadeDaPele(tonalidadeDaPele);
     setEnergia(energia);
+    setSimCash(simCash);
+    setEndereco(endereco);
 }
 
+Sims::Sims(const Sims & simCopia)
+:MAXTAMNOMES(simCopia.MAXTAMNOMES)
+{
+  cout << "Inicializando Sim.\n";
+  
+  this->nome = simCopia.nome;
+  this->sobrenome = simCopia.sobrenome;
+  this->genero = simCopia.genero;
+  this->tonalidadeDaPele = simCopia.tonalidadeDaPele;
+  this->energia = simCopia.energia;
+  this->simCash = simCopia.simCash;
+  this->endereco = simCopia.endereco;
+}
 //Destrutor -> ainda será implementado
 Sims::~Sims( )
 {  
@@ -58,10 +73,27 @@ double Sims::getEnergia() const
     return energia;
 }
 
+double Sims::getSimCash() const 
+{
+    return simCash;
+}
+
+string Sims::getEndereco() const 
+{
+    return endereco;
+}
+
 // Métodos Set -> pra modificar o valor de um atributo da classe.
+
 void Sims::setNome(string nome)
 {
-    this->nome = nome; 
+    if ( nome.length( ) > MAXTAMNOMES ) // limitar o tamanho da string 
+    {
+        this->nome = nome.substr( 0, MAXTAMNOMES );
+        cout << "\033[1;31m Nome alterado. Excedeu o valor máximo de "<<MAXTAMNOMES<<" caracteres.\033[0m\n";
+        return;
+    }
+    this->nome = nome;
 }
 
 void Sims::setSobrenome(string sobrenome) 
@@ -96,6 +128,20 @@ void Sims::setEnergia(double energia)
     this->energia = 30;
 }
 
+void Sims::setSimCash(double simCash) 
+{  
+    this->simCash = simCash; 
+}
+
+void Sims::setEndereco(string endereco) 
+{ 
+    if ( endereco.length( ) > MAXTAMENDERECO ){
+        this->endereco = endereco.substr( 0, MAXTAMENDERECO );
+        cout << "\033[1;31m Nome de endereço alterado. Excedeu o valor máximo de " <<MAXTAMENDERECO <<" caracteres. \033[0m \n";
+        return;
+    }
+    this->endereco = endereco; 
+}
 // Demais métodos
 void Sims::simVisaoGeral() const 
 {
@@ -108,6 +154,8 @@ void Sims::simVisaoGeral() const
     cout << "\033[1;32m ❇️ Gênero: \033[0m" << generoSimbolo << "\n";
     cout << "\033[1;32m ❇️ Tonalidade da Pele \033[0m: " << getColor(tonalidadeDaPele) << "\n";
     cout << "\033[1;32m ❇️ Energia: \033[0m" << energia << "\n";
+    cout << "\033[1;32m ❇️ SimCash: \033[0m" << simCash <<"\n";
+    cout << "\033[1;32m ❇️ Endereço: \033[0m" << endereco <<"\n";
     cout << "==========================\n";
 }
 
