@@ -22,6 +22,7 @@ SimsHouse::SimsHouse()
 SimsHouse::SimsHouse(tuple<int, int> proporcaoTerreno, bool premium,double valor,string proprietario,const string ENDERECO)
 :ENDERECO(ENDERECO)
 {
+    cout << "Inicializando SimHouse.\n";
     setProporcaoTerreno(proporcaoTerreno);
     setPremium(premium);
     setValor(valor);
@@ -31,10 +32,11 @@ SimsHouse::SimsHouse(tuple<int, int> proporcaoTerreno, bool premium,double valor
 SimsHouse::SimsHouse(const SimsHouse &houseCopia)
 :ENDERECO(houseCopia.ENDERECO)
 {
-  this->proporcaoTerreno = houseCopia.proporcaoTerreno;
-  this->premium = houseCopia.premium;
-  this->valor = houseCopia.valor;
-  this->proprietario = houseCopia.proprietario;
+    cout << "Inicializando SimHouse.\n";
+    this->proporcaoTerreno = houseCopia.proporcaoTerreno;
+    this->premium = houseCopia.premium;
+    this->valor = houseCopia.valor;
+    this->proprietario = houseCopia.proprietario;
 }
 
 // Destrutor -> ainda será implementado
@@ -104,7 +106,7 @@ void SimsHouse::overview() const
   cout << (premium ? "Premium💎" : "")<< "\n";
   cout << "==========================================\n";
   cout << "\033[1;32m ❇️ Endereço: \033[0m" << ENDERECO<< "\n";
-  cout << "\033[1;32m ❇️ valor: \033[0m" << valor << "\n";
+  cout << "\033[1;32m ❇️ valor: \033[0m" << valor << " SimsCash\n";
   cout << "\033[1;32m ❇️ proprietario: \033[0m" << proprietario <<"\n";
   cout << "============================================\n";
 }
@@ -118,6 +120,6 @@ void SimsHouse::efetuarVenda(Sims &novoProprietario)
     }
     novoProprietario.setSimCash(novoProprietario.getSimCash() - valor);
     novoProprietario.setEndereco(ENDERECO);
-    setProprietario(novoProprietario.getNome());
+    setProprietario(novoProprietario.getSobrenome());
     cout << "💸\033[1;32m Venda realizada com sucesso!\033[0m💸\n";
 }

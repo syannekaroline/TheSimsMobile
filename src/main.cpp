@@ -2,6 +2,7 @@
 #include "Sims.h"
 #include "SimsHouse.h"
 using std::cout;
+using std::make_tuple;
 
 int main() {
   cout << "Usando Sims no main\n";
@@ -26,6 +27,7 @@ int main() {
   cout<< "\n\nCriando objeto da classe SimsHouse: \n";
   SimsHouse casaMeuSim;
   casaMeuSim.overview();
+  cout<< "\nEfetuando venda da SimsHouse: \n";
   casaMeuSim.efetuarVenda(meuSim);
   meuSim.simVisaoGeral();
   casaMeuSim.overview();
@@ -34,7 +36,10 @@ int main() {
   const Sims SYANNE(meuSim);
   //objetos const só podem chamar métodos const
   SYANNE.simVisaoGeral();
-  
+
+  //criando SimsHouse Premium
+  SimsHouse HousePremium(make_tuple(30, 30),true,224000,"Sem proprietário","Pôr do sol Plantão 90");
+  HousePremium.overview();
 
   return 0;
 }

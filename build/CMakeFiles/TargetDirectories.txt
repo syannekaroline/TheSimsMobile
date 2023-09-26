@@ -1,0 +1,3 @@
+/home/syannetavares/Documentos/Códigos/TheSimsProject/build/CMakeFiles/meuprograma.dir
+/home/syannetavares/Documentos/Códigos/TheSimsProject/build/CMakeFiles/edit_cache.dir
+/home/syannetavares/Documentos/Códigos/TheSimsProject/build/CMakeFiles/rebuild_cache.dir

@@ -29,7 +29,6 @@ Sims::Sims(string nome, string sobrenome, char genero, int tonalidadeDaPele,doub
 }
 
 Sims::Sims(const Sims & simCopia)
-:MAXTAMNOMES(simCopia.MAXTAMNOMES)
 {
   cout << "Inicializando Sim.\n";
   
@@ -98,6 +97,11 @@ void Sims::setNome(string nome)
 
 void Sims::setSobrenome(string sobrenome) 
 {
+    if ( sobrenome.length( ) > MAXTAMNOMES ) // limitar o tamanho da string 
+    {
+        cout << "\033[1;31m Sobrenome alterado. Excedeu o valor máximo de "<<MAXTAMNOMES<<" caracteres.\033[0m\n";
+        return;
+    }
     this->sobrenome = sobrenome;
 }
 
