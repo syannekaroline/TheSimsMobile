@@ -1,1 +1,0 @@
-/usr/bin/c++ -rdynamic CMakeFiles/meuprograma.dir/src/main.cpp.o CMakeFiles/meuprograma.dir/src/Sims.cpp.o CMakeFiles/meuprograma.dir/src/SimsHouse.cpp.o -o meuprograma 
