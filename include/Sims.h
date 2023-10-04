@@ -34,6 +34,7 @@ class Sims
         void simVisaoGeral() const; //método mostra os atributos de um sim
         void descansar();  //método que carrega a energia do sim
         string getColor(int) const;
+        void limparSimsHouse(); 
 
     private:
         // atributos sempre na parte privada
@@ -47,6 +48,10 @@ class Sims
 
         const int MAXTAMNOMES = 12; // Tamanho max pra nomes, sobrenomes
         const int MAXTAMENDERECO = 25;
+        const double ENERGIAMAX = 30;
+
+        //atributo static const
+        static const int ENERGIAMIN = 5; // energia min pra bem estar do Sim
 };
 
 #endif // SIMS_H

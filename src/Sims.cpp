@@ -7,7 +7,6 @@ using std::cout;
 #include "Sims.h"
 
 // CONSTRUTORES
-
 // Construtor padrão -> inicializar objetos com valores padrão pré-definidos.
 Sims::Sims()
 : nome("Fulana"), sobrenome("da Silva"), genero('F'),tonalidadeDaPele(7),energia(20),simCash(300),endereco("")
@@ -151,9 +150,21 @@ void Sims::simVisaoGeral() const
 {
     string generoSimbolo =  (genero == 'F') ? "♀" : "♂";
 
-    cout << "==========================\n";
-    cout << "\033[1;32m ❇️ Visão Geral do Sim ❇️ \033[0m\n";
-    cout << "==========================\n";
+        cout<<R"(
+    ______     ___      /\/|                              _ 
+   / /\ \ \   / (_)___ |/\/_  ___     __ _  ___ _ __ __ _| |
+  / /  \ \ \ / /| / __|/ _` |/ _ \   / _` |/ _ \ '__/ _` | |
+ / / _  \ \ V / | \__ \ (_| | (_) | | (_| |  __/ | | (_| | |
+/_/_(_)_ \_\_/_ |_|___/\__,_|\___/   \__, |\___|_|  \__,_|_|
+/ __| | '_ ` _ ||                     |___/                  
+\__ \ | | | | |||                                           
+|___/_|_| |_| |||                                           
+\ \      / /                                                
+ \ \    / /                                                 
+  \ \  / /                                                  
+   \_\/_/                                                   )"<<"\n";
+
+    cout << "\n==========================\n";
     cout << "\033[1;32m ❇️ Nome: \033[0m" << nome << " " << sobrenome << "\n";
     cout << "\033[1;32m ❇️ Gênero: \033[0m" << generoSimbolo << "\n";
     cout << "\033[1;32m ❇️ Tonalidade da Pele \033[0m: " << getColor(tonalidadeDaPele) << "\n";
@@ -193,7 +204,7 @@ void Sims::descansar()
         }
 
         cout << "\r" << std::flush;  // carriage return e limpeza do buffer
-    } while (energia < 30);
+    } while (energia < ENERGIAMAX);
 
     // Restaura a cor padrão do texto e informa que o descanso foi finalizado
     cout << "\033[0m";
@@ -229,4 +240,41 @@ string Sims::getColor(int color ) const
         }
     }
     return "⬛";
+}
+
+void Sims::limparSimsHouse()
+{   
+    if ( endereco == "")
+    {
+        cout<< "\n\033[1;31mUma SimsHouse deve ser vendida pra você antes de realizar essa ação!\033[0m\n";
+        return;
+    }
+
+    int gastoTotalEnergia =10; // quanto de energia custa limpar a casa
+
+    if (energia<=gastoTotalEnergia){
+        cout<< "\033[1;33m Sua Energia está abaixo dos limites pra realizar essa ação. Por favor, descanse primeiro !\033[0m \n";
+        return;
+    }
+
+    cout << "\n================ "<< nome<<" vai limpar sua SimHouse ==========" << "\n";
+
+    while ( energia > ENERGIAMIN && gastoTotalEnergia>0)
+    {
+        energia -= 5;
+        gastoTotalEnergia -=5;
+        //Ação de limpar (simulação)
+        cout << "Limpando... ";
+        sleep(2);
+        cout << "Energia restante: " << energia << "\n";
+        
+    }
+
+    cout << "\033[1;32mA limpeza foi concluída com sucesso!\033[0m\n";
+    
+    // mensagem de alerta sobre a energia
+    if (energia <= ENERGIAMIN )
+        cout << "\033[1;33mSua energia está muito baixa. Descanse para recuperá-la!\033[0m\n";
+
+    return;
 }

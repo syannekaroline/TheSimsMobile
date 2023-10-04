@@ -12,13 +12,12 @@ class SimsHouse
   public:
     // construtores e destrutores sempre começam a parte pública da classe
     SimsHouse(); // Construtor-> método chamado pra inicializar os atributos a classe
-    SimsHouse(tuple<int,int>,bool,double,const string, string=""); // declarando o construtor com parâmetros.
+    SimsHouse(const tuple<int,int> & , double,const string & , const string & =""); // declarando o construtor com parâmetros.
     SimsHouse( const SimsHouse & ); //construtor de cópia
     ~SimsHouse();//Destrutor -> relacionado a desalocaçao de memória 
 
     // declarando get e set -> acesso seguro na alteração dos atributos
-    void setProporcaoTerreno(tuple<int,int>);
-    void setPremium(bool);
+    void setProporcaoTerreno(const tuple<int,int> & );
     void setValor(double);
     void setProprietario(string);
     
@@ -30,8 +29,13 @@ class SimsHouse
 
     //Demais métodos 
     void overview() const;
-    void efetuarVenda(Sims &); 
+    void efetuarVenda(Sims &);
 
+    //métodos statics
+    inline static int getNumSimsHouses(){ return numEnderecos;};
+    inline static int getMinValorPremiumHouse(){ return MINVALORPREMIUM;};
+
+    static void mostrarVizinhanca();
   private:
 
     tuple<int,int> proporcaoTerreno;
@@ -41,6 +45,12 @@ class SimsHouse
 
     const string ENDERECO;
     const int MAXTAMSTRINGS= 25;
+    //atributos static
+    const static double MINVALORPREMIUM;
+    const static int MAXNUMENDERECOS = 9; 
+    static int numEnderecos;
+    static int numLotesPossuidos;// número de casas vendidas
+    static string enderecosList[ MAXNUMENDERECOS ];
 };
 
 #endif // SIMSHOUSE_H
