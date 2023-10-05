@@ -19,17 +19,17 @@ const string MAGENTA = "\033[35m";  // Magenta para o emoji
 const string RESET = "\033[0m";  // Reset para a cor padrão
 
 //inicializando atributos statics
-const string SimsAppearance::listCabeca[NUMAXCONFIGURACOES] = {"Cabeça 1", "Cabeça 2", "Cabeça 3"};
-const string SimsAppearance::listOlho[NUMAXCONFIGURACOES] = {"Olhos 1", "Olhos 2", "Olhos 3"};
-const string SimsAppearance::listNariz[NUMAXCONFIGURACOES] = {"Nariz 1", "Nariz 2", "Nariz 3"};
-const string SimsAppearance::listBoca[NUMAXCONFIGURACOES] = {"Boca 1", "Boca 2","Boca 3"};
-const string SimsAppearance::listOrelhas[NUMAXCONFIGURACOES] = {"Orelha 1", "Orelha 2", "Orelha 3"};
-const string SimsAppearance::listCabelo[NUMAXCONFIGURACOES] = {"Divisão Sentral Suave", "Bob Curto Desfiado", "Ondas da praia"};
-const string SimsAppearance::listSobrancelha[NUMAXCONFIGURACOES] = {"Delicadamente Arqueada", "Naturalmente Arqueadas", "Sobrancelha3"};
+const string SimsAppearance::LIST_CABECA[NUMAXCONFIGURACOES] = {"Cabeça 1", "Cabeça 2", "Cabeça 3"};
+const string SimsAppearance::LIST_OLHOS[NUMAXCONFIGURACOES] = {"Olhos 1", "Olhos 2", "Olhos 3"};
+const string SimsAppearance::LIST_NARIZ[NUMAXCONFIGURACOES] = {"Nariz 1", "Nariz 2", "Nariz 3"};
+const string SimsAppearance::LIST_BOCA[NUMAXCONFIGURACOES] = {"Boca 1", "Boca 2","Boca 3"};
+const string SimsAppearance::LIST_ORELHA[NUMAXCONFIGURACOES] = {"Orelha 1", "Orelha 2", "Orelha 3"};
+const string SimsAppearance::LIST_CABELO[NUMAXCONFIGURACOES] = {"Divisão Sentral Suave", "Bob Curto Desfiado", "Ondas da praia"};
+const string SimsAppearance::LIST_SOBRANCELHA[NUMAXCONFIGURACOES] = {"Delicadamente Arqueada", "Naturalmente Arqueadas", "Sobrancelha3"};
 
 // construtores
 SimsAppearance::SimsAppearance()
-:cabeca(listCabeca[0]), olhos(listOlho[0]), nariz(listNariz[0]), boca(listBoca[0]), orelha(listOrelhas[0]), cabelo(listCabelo[2]),sobrancelha(listSobrancelha[1])
+:cabeca(LIST_CABECA[0]), olhos(LIST_OLHOS[0]), nariz(LIST_NARIZ[0]), boca(LIST_BOCA[0]), orelha(LIST_ORELHA[0]), cabelo(LIST_CABELO[2]),sobrancelha(LIST_SOBRANCELHA[1])
 {
     cout << "Criando aparência do Sims com construtor padrão";
 }
@@ -63,7 +63,7 @@ SimsAppearance::~SimsAppearance()
 
 void SimsAppearance::setCabeca(const string &cabeca)
 {
-    if (find(begin(listCabeca), end(listCabeca), cabeca) != end(listCabeca))
+    if (find(begin(LIST_CABECA), end(LIST_CABECA), cabeca) != end(LIST_CABECA))
     {
         this->cabeca = cabeca;
         return;
@@ -75,7 +75,7 @@ void SimsAppearance::setCabeca(const string &cabeca)
 }
 void SimsAppearance::setOlhos(const string &olhos)
 {
-    if (find(begin(listOlho), end(listOlho), olhos) != end(listOlho))
+    if (find(begin(LIST_OLHOS), end(LIST_OLHOS), olhos) != end(LIST_OLHOS))
     {
         this->olhos = olhos;
         return;
@@ -87,7 +87,7 @@ void SimsAppearance::setOlhos(const string &olhos)
 
 void SimsAppearance::setNariz(const string &nariz)
 {
-    if (find(begin(listNariz), end(listNariz), nariz) != end(listNariz)) {
+    if (find(begin(LIST_NARIZ), end(LIST_NARIZ), nariz) != end(LIST_NARIZ)) {
         this->nariz = nariz;
         return;
     }
@@ -97,7 +97,7 @@ void SimsAppearance::setNariz(const string &nariz)
 
 void SimsAppearance::setBoca(const string &boca)
 {
-    if (find(begin(listBoca), end(listBoca), boca) != end(listBoca))
+    if (find(begin(LIST_BOCA), end(LIST_BOCA), boca) != end(LIST_BOCA))
     {
         this->boca = boca;
         return;
@@ -107,7 +107,7 @@ void SimsAppearance::setBoca(const string &boca)
 }
 
 void SimsAppearance::setOrelha(const string &orelha) {
-    if (find(begin(listOrelhas), end(listOrelhas), orelha) != end(listOrelhas))
+    if (find(begin(LIST_ORELHA), end(LIST_ORELHA), orelha) != end(LIST_ORELHA))
     {
         this->orelha = orelha;
         return;
@@ -118,7 +118,7 @@ void SimsAppearance::setOrelha(const string &orelha) {
 }
 
 void SimsAppearance::setCabelo(const string &cabelo) {
-    if (find(begin(listCabelo), end(listCabelo), cabelo) != end(listCabelo)) {
+    if (find(begin(LIST_CABELO), end(LIST_CABELO), cabelo) != end(LIST_CABELO)) {
         this->cabelo = cabelo;
         return;
     }
@@ -128,7 +128,7 @@ void SimsAppearance::setCabelo(const string &cabelo) {
 }
 
 void SimsAppearance::setSobrancelha(const string &sobrancelha) {
-    if (find(begin(listSobrancelha), end(listSobrancelha), sobrancelha) != end(listSobrancelha))
+    if (find(begin(LIST_SOBRANCELHA), end(LIST_SOBRANCELHA), sobrancelha) != end(LIST_SOBRANCELHA))
     {
         this->sobrancelha = sobrancelha;
         return;
@@ -214,34 +214,34 @@ void SimsAppearance::exibirMenuConfiguracoes(int opcao)
     switch (opcao)
     {
     case 0 :
-        mostrarOpcoes(listCabeca,"CABEÇA");
+        mostrarOpcoes(LIST_CABECA,"CABEÇA");
         break;
     case 1 :
-        mostrarOpcoes(listOlho,"OLHO");
+        mostrarOpcoes(LIST_OLHOS,"OLHO");
         break;
     case 2 :
-        mostrarOpcoes(listNariz,"NARIZ");
+        mostrarOpcoes(LIST_NARIZ,"NARIZ");
         break;
     case 3 :
-        mostrarOpcoes(listBoca,"BOCA");
+        mostrarOpcoes(LIST_BOCA,"BOCA");
         break;
     case 4 :
-        mostrarOpcoes(listOrelhas,"ORELHAS");
+        mostrarOpcoes(LIST_ORELHA,"ORELHAS");
         break;
     case 5 :
-        mostrarOpcoes(listCabelo,"CABELO");
+        mostrarOpcoes(LIST_CABELO,"CABELO");
         break;
     case 6 :
-        mostrarOpcoes(listSobrancelha,"SOBRANCELHA");
+        mostrarOpcoes(LIST_SOBRANCELHA,"SOBRANCELHA");
         break;
     default:
-        mostrarOpcoes(listCabeca,"CABEÇA");
-        mostrarOpcoes(listOlho,"OLHO");
-        mostrarOpcoes(listNariz,"NARIZ");
-        mostrarOpcoes(listCabelo,"CABELO");
-        mostrarOpcoes(listBoca,"BOCA");
-        mostrarOpcoes(listOrelhas,"ORELHAS");
-        mostrarOpcoes(listSobrancelha,"SOBRANCELHA");
+        mostrarOpcoes(LIST_CABECA,"CABEÇA");
+        mostrarOpcoes(LIST_OLHOS,"OLHO");
+        mostrarOpcoes(LIST_NARIZ,"NARIZ");
+        mostrarOpcoes(LIST_CABELO,"CABELO");
+        mostrarOpcoes(LIST_BOCA,"BOCA");
+        mostrarOpcoes(LIST_ORELHA,"ORELHAS");
+        mostrarOpcoes(LIST_SOBRANCELHA,"SOBRANCELHA");
 
         break;
     }

@@ -54,13 +54,13 @@ class SimsAppearance
 
     // atributos estáticos
     static const int NUMAXCONFIGURACOES = 3;
-    static const string listCabeca[NUMAXCONFIGURACOES];
-    static const string listOlho[NUMAXCONFIGURACOES];
-    static const string listNariz[NUMAXCONFIGURACOES];
-    static const string listBoca[NUMAXCONFIGURACOES];
-    static const string listOrelhas[NUMAXCONFIGURACOES];
-    static const string listCabelo[NUMAXCONFIGURACOES];
-    static const string listSobrancelha[NUMAXCONFIGURACOES];
+    static const string LIST_CABECA[NUMAXCONFIGURACOES];
+    static const string LIST_OLHOS[NUMAXCONFIGURACOES];
+    static const string LIST_NARIZ[NUMAXCONFIGURACOES];
+    static const string LIST_BOCA[NUMAXCONFIGURACOES];
+    static const string LIST_ORELHA[NUMAXCONFIGURACOES];
+    static const string LIST_CABELO[NUMAXCONFIGURACOES];
+    static const string LIST_SOBRANCELHA[NUMAXCONFIGURACOES];
 };
 
 #endif // SIMSAPPEARANCE_H
