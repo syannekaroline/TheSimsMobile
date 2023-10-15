@@ -33,7 +33,7 @@ class SimsHouse
 
     //métodos statics
     inline static int getNumSimsHouses(){ return numEnderecos;};
-    inline static int getMinValorPremiumHouse(){ return MINVALORPREMIUM;};
+    inline static double getMinValorPremiumHouse(){ return MINVALORPREMIUM;};
 
     static void mostrarVizinhanca();
   private:

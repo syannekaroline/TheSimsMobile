@@ -52,10 +52,10 @@ SimsHouse::SimsHouse(const SimsHouse &houseCopia)
     numEnderecos++;
 }
 
-// Destrutor -> ainda será implementado
+// Destrutor
 SimsHouse::~SimsHouse() 
 {
-
+    cout<<"Deletando objeto SimsHouse: "<<ENDERECO<<"\n";
 }
 
 // Métodos Get -> obter o valor de um atributo privado de uma classe sem
@@ -140,6 +140,7 @@ void SimsHouse::efetuarVenda(Sims &novoProprietario)
     }
     novoProprietario.setSimCash(novoProprietario.getSimCash() - valor);
     novoProprietario.setEndereco(ENDERECO);
+    novoProprietario.registrarConquista("Lar, doce lar.");
     setProprietario(novoProprietario.getSobrenome());
     cout << "💸\033[1;32m Venda realizada com sucesso!\033[0m💸\n";
     numLotesPossuidos++;

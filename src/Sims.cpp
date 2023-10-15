@@ -1,6 +1,7 @@
 #include <iostream>
 #include <string>
 #include <unistd.h>
+#include <cmath>
 
 using std::cout;
 
@@ -9,7 +10,7 @@ using std::cout;
 // CONSTRUTORES
 // Construtor padrão -> inicializar objetos com valores padrão pré-definidos.
 Sims::Sims()
-: nome("Fulana"), sobrenome("da Silva"), genero('F'),tonalidadeDaPele(7),energia(20),simCash(300),endereco("")
+: nome("Fulana"), sobrenome("da Silva"), genero('F'),tonalidadeDaPele(7),energia(20),simCash(300),endereco(""),experiencia(0),conquistasPtr(0),conquistasSize(0),contatosPtr(0),contatosSize(0)
 {
     cout << "Inicializando Sim.\n";
 }
@@ -17,6 +18,15 @@ Sims::Sims()
 // Construtor com com parâmetros -> permite a personalização dos atributos
 Sims::Sims(string nome, string sobrenome, char genero, int tonalidadeDaPele,double energia,double simCash,string endereco)
 {
+    conquistasSize = 0;
+    proxConquista=0;
+    conquistasPtr=0;
+
+    contatosSize = 0;
+    proxContato=0;
+    contatosPtr=0;
+    experiencia = 0;
+
     cout << "Inicializando Sim.\n";
     setNome(nome);
     setSobrenome(sobrenome);
@@ -29,20 +39,40 @@ Sims::Sims(string nome, string sobrenome, char genero, int tonalidadeDaPele,doub
 
 Sims::Sims(const Sims & simCopia)
 {
-  cout << "Inicializando Sim.\n";
-  
-  this->nome = simCopia.nome;
-  this->sobrenome = simCopia.sobrenome;
-  this->genero = simCopia.genero;
-  this->tonalidadeDaPele = simCopia.tonalidadeDaPele;
-  this->energia = simCopia.energia;
-  this->simCash = simCopia.simCash;
-  this->endereco = simCopia.endereco;
+    cout << "Inicializando Sim.\n";
+
+    this->nome = simCopia.nome;
+    this->sobrenome = simCopia.sobrenome;
+    this->genero = simCopia.genero;
+    this->tonalidadeDaPele = simCopia.tonalidadeDaPele;
+    this->energia = simCopia.energia;
+    this->simCash = simCopia.simCash;
+    this->endereco = simCopia.endereco;
+    this->experiencia = simCopia.experiencia;
+
+    //alocação dinâmica pra lista de coquistas do personagem
+    this->conquistasSize = simCopia.conquistasSize;
+    this->proxConquista = simCopia.proxConquista;
+    this->conquistasPtr = new string[ this->conquistasSize ];
+
+    //alocação dinâmica pra lista de coquistas do personagem
+    this->contatosSize = simCopia.contatosSize;
+    this->proxContato = simCopia.proxContato;
+    this->contatosPtr = new string[ this->contatosSize ];
+
+    for( int i = 0; i < proxConquista; i++ )
+        this->conquistasPtr[ i ] = simCopia.conquistasPtr[ i ];
+
+    for( int i = 0; i < proxContato; i++ )
+        this->contatosPtr[ i ] = simCopia.contatosPtr[ i ];
+
 }
-//Destrutor -> ainda será implementado
+//Destrutor
 Sims::~Sims( )
 {  
-
+    cout<<"\nSim "<<nome<<" "<< sobrenome<< " foi excluído\n";
+    delete [] conquistasPtr;
+    delete [] contatosPtr;
 }
 
 // Métodos Get -> obter o valor de um atributo privado de uma classe sem modificação direta > controle + preciso sobre quem pode acessá-lo.
@@ -171,6 +201,7 @@ void Sims::simVisaoGeral() const
     cout << "\033[1;32m ❇️ Energia: \033[0m" << energia << "\n";
     cout << "\033[1;32m ❇️ SimCash: \033[0m" << simCash <<"\n";
     cout << "\033[1;32m ❇️ Endereço: \033[0m" << endereco <<"\n";
+    cout << "\033[1;32m ❇️ Experiência: \033[0m" << experiencia <<" xp \n";
     cout << "==========================\n";
 }
 
@@ -271,10 +302,153 @@ void Sims::limparSimsHouse()
     }
 
     cout << "\033[1;32mA limpeza foi concluída com sucesso!\033[0m\n";
+    cout<< "\033[1;32m 🎉🎊 + 2 px 🎉🎊\033[0m\n";
+    experiencia+=2; // aumenta a experiência em 2 xp
     
     // mensagem de alerta sobre a energia
     if (energia <= ENERGIAMIN )
         cout << "\033[1;33mSua energia está muito baixa. Descanse para recuperá-la!\033[0m\n";
 
     return;
+}
+
+void::Sims::alocarConquistas(const string &conquista)
+{  
+    //Aloca mais memória pra armazenar dinâmicamente a lista de conquistas do personagem
+    conquistasSize += int( ceil( conquistasSize * 0.5 ) );//Aumenta a memória em 50%
+    string *conquistaTemp = new string[ conquistasSize ];
+    for( int i = 0; i < proxConquista; i++ )
+        conquistaTemp[ i ] = conquistasPtr[ i ];
+
+    delete [] conquistasPtr;   
+   
+    conquistasPtr = conquistaTemp;
+
+    conquistasPtr[ proxConquista++ ] = conquista;;
+    
+}
+
+void Sims::registrarConquista( const string &conquista)
+{
+    
+    cout<<"🥳 \033[1;32mParabéns!! Uma nova conquista foi realizada!!\033[0m 🥳 \n";
+    cout<< "\033[1;32m 🎉🎊 "<<conquista << " 🎉🎊\033[0m\n";
+    experiencia+=5;
+    cout<< "\033[1;32m 🎉🎊 + 5 px 🎉🎊\033[0m\n";
+    if(proxConquista < conquistasSize)
+    {
+        conquistasPtr[proxConquista++] = conquista;
+        return;
+    }
+
+    if( conquistasSize==0)
+    {
+        conquistasSize = 1;
+        conquistasPtr = new string[conquistasSize];
+        conquistasPtr[proxConquista++] = conquista;
+        return;
+    }
+
+    alocarConquistas(conquista); // caso não tenha espaço pra alocar -> chama o método alocarConquistas(conquista) para aumentar a memória e adicionar a conquista no novo array.
+}
+
+void Sims::verConquistas( ) const
+ {
+    //percorre dinâmicamente a lista de conquisa do personagem e mostra de forma estilizada ao jogador
+
+    cout<<R"(
+    ____    ____                        _     _            
+   / /\ \  / ___|___  _ __   __ _ _   _(_)___| |_ __ _ ___ 
+  / /  \ \| |   / _ \| '_ \ / _` | | | | / __| __/ _` / __|
+ / /    \ \ |__| (_) | | | | (_| | |_| | \__ \ || (_| \__ \
+/_/__  _ \_\____\___/|_| |_|\__, |\__,_|_|___/\__\__,_|___/
+/ ___|(_)_ __ ___  ___         |_|                         
+\___ \| | '_ ` _ \/ __|                                    
+ ___) | | | | | | \__ \                                    
+|____/|_|_|_|_| |_|___/                                    
+\ \      / /                                               
+ \ \    / /                                                
+  \ \  / /                                                 
+   \_\/_/                                                  )"<<"\n";
+
+    cout<<"Conquistas "<<nome <<" "<<sobrenome<<"\n";
+    cout << "==========================\n";
+    for( int i = 0; i < proxConquista; i++ )
+        cout << "❇️ "<< conquistasPtr[ i ] << '\n';
+    cout << "==========================\n";
+
+    
+ }
+
+void Sims::alocarContatos(const string &contato)
+{  
+	//Aloca mais memória pra armazenar dinâmicamente a lista de contatos do personagem
+    contatosSize += int( ceil( contatosSize * 0.5 ) );//Aumenta a memória em 50%
+    string *contatosTemp = new string[ contatosSize ];
+    for( int i = 0; i < proxContato; i++ )
+        contatosTemp[ i ] = contatosPtr[ i ];
+
+    delete [] contatosPtr;   
+    contatosPtr = contatosTemp;
+    contatosPtr[ proxContato++ ] = contato;
+}
+
+bool Sims::verificarContatoExistente(const string& str) const
+{
+    //verifica se um personagem já faz parte da lista de contatos
+    for (int i = 0; i < proxContato; ++i)
+    {
+        if (contatosPtr[i] == str)
+            return true;  // O contato já foi registrado
+    }
+    return false;  // novo contato
+}
+
+void Sims::fazerApresentacaoAgradavel( const Sims &sim)
+{
+    //adiciona um personagem na lista dinâmica de contatos
+    string novoContato = sim.getNome()+" "+sim.getSobrenome();
+    if(verificarContatoExistente(novoContato))
+    {
+        cout << nome << sobrenome << " e " << novoContato<<" já se conhecem\n";
+        return;
+    }
+    cout << "\nApresentação agradável entre "<<nome <<" "<<sobrenome<<" e "<< novoContato<<"\n";
+    int ganhoXp=5;
+    // Loop para simular a apresentação dos sims
+    for (int i =0; i<ganhoXp;i++)
+    {
+        experiencia+1;
+        cout << "💬"<<std::flush;
+        sleep (1);  // Pausa de 1 segundo
+    }
+    cout << "\nApresentação agradável concluída 👥 \n";
+
+    if(proxContato < contatosSize)
+    {
+        contatosPtr[proxContato++] = novoContato;
+        return;
+    }
+
+    if( contatosSize==0)
+    {
+        contatosSize = 1;
+        contatosPtr = new string[contatosSize];
+        contatosPtr[proxContato++] = novoContato;
+        return;
+    }
+
+    alocarContatos(novoContato);
+}
+
+
+void Sims::verContatos( ) const
+{ 
+    //mostra a lista de contatos do personagem
+    cout<<"Contatos de "<<nome <<" "<<sobrenome<<"\n";
+    cout << "==========================\n";
+    for( int i = 0; i < proxContato; i++ )
+        cout << "❇️ "<< contatosPtr[ i ] << '\n';
+    cout << "==========================\n";
+
 }

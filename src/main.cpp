@@ -13,70 +13,101 @@ enum caracteristicas {CABECA, OLHOS,NARIZ,BOCA,ORELHA,CABELO,SOBRANCELHA};
 int main() {
     cout <<VERDE;
     cout<< R"(
-        ____  _____ _            ____  _               
-       / /\ \|_   _| |__   ___  / ___|(_)_ __ ___  ___ 
-      / /  \ \ | | | '_ \ / _ \ \___ \| | '_ ` _ \/ __|
-     / /    \ \| | | | | |  __/  ___) | | | | | | \__ \
-    /_/  __  \_\_|_|_| |_|\___| |____/|_|_| |_| |_|___/
-    |  \/  | ___ | |__ (_) | ___                       
-    | |\/| |/ _ \| '_ \| | |/ _ |                      
-    | |  | | (_) | |_) | | |  __/                      
-    |_|  |_|\___/|_.__/|_|_|\___|                      
-    \ \      / /                                       
-     \ \    / /                                        
-      \ \  / /                                         
-       \_\/_/                                          
+                                                                 ,-,-.
+                                                       _(    _)
+                                                      (__,`-'
+                                            ,'`.   .-----,
+                             __           ,','`.`.  |   |
+                  _____    ,'  `.       ,','    `.`.|---|
+              _,-'     \  /      \    ,',' _____  `.`.  |
+           ,-'          \ \      /  ,','  |  |  |   `.`.|
+         ,'           ___\ `.__.' ,','__  |--|--|   __'.`.         _
+        /         _,-'     .----. \|    \ |__|__|  /    |/      ,-' \ TM
+       |        ,'         |    |  |     \        /     |    ,-'    _\
+       |        |          |    |  |      \      /      |  ,'    ,-'
+        \       \          |    |  |       \    /       | /     /
+         \       \         |    |  |        \  /        | |    ( 
+          \       `.       |    |  |         \/         |  \    \
+ ____ _    `.       `.     |    |  |    \          /    |   `.   `.
+'-..-'||     `.       `.   |    |  |    |\        /|    |     `.   `.
+  ||  ||__   __`.       \  |    |  |    | \      / |    |       \    \
+  ||  |.-.\ /__\ \       \ |    |  |    |  \    /  |    |      ,'    /
+  ||  || || \__, /       | |    |  |    |   \__/   |    | __,-'    ,'
+               ,'        / |    |  |    |          |    | \     ,-'
+        ____,-'        ,'  |____|  |    |          |    |  \_,-'
+        \            ,'            |____|          |____|
+         \       _,-'
+          \___,-'
+
        )"<< RESET<<"\n";
 
   //construtor com parâmetros
   cout << "\n=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=\n";
   cout << "Sim com atributos personalizados.\n";
-  Sims meuSim("Syanne", "Karoline",  'F' , 7, 7.0,100000);
-  meuSim.simVisaoGeral();
-  meuSim.descansar();
-  cout << "Usando metodo get para obter nova energia: " << meuSim.getEnergia() << "\n";
+  Sims meuSim("Syanne", "Karoline",  'F' , 7, 7.0,225000);
+
+  //criando ponteiros pra manipular objeto
+  Sims *meuSimPtr = &meuSim;
+  meuSimPtr->descansar();
+  cout << "Usando metodo get para obter nova energia com ponteiro: " << meuSimPtr->getEnergia() << "\n";
 
   //Utilizando parâmetro default do construtor mostrando a limitação de string
   cout << "\n=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=\n";
   cout << "Sim com atributos personalizados utilizando parâmetro de energia default.\n";
 
-  Sims SimCiclano("Ciclanojncjcnkdjfnsdkcjscdscsdfcdfcdsc", "da silva",  'M' , 7);
-  SimCiclano.simVisaoGeral();
+  cout<<"Criando um objeto Sim e armazenando seu endereço em um ponteiro comm alocação de memória:\n";
+  Sims *simCiclanoPtr = new Sims("Ciclanojncjcnkdjfnsdkcjscdscsdfcdfcdsc", "da silva",  'M' , 7);
+  simCiclanoPtr->simVisaoGeral();
 
-  //construindo objeto da classe SimsHouse
-  cout<< "\n\nCriando objeto da classe SimsHouse: \n";
+  meuSimPtr->fazerApresentacaoAgradavel(*simCiclanoPtr);
+  meuSimPtr->verContatos();
+  meuSimPtr->fazerApresentacaoAgradavel(*simCiclanoPtr);
+  cout<<" < Deletando objeto simCiclano pois não será mais utilizado > ";
+  delete simCiclanoPtr;
+  simCiclanoPtr=0;
 
-  SimsHouse casaMeuSim;
-  casaMeuSim.overview();
+  // construindo objeto da classe SimsHouse
+  cout<< "\n\nCriando objeto da classe SimsHouse com alocação de memória: \n";
+
+  SimsHouse *casaMeuSimPtr = new SimsHouse;
+  casaMeuSimPtr->overview();
+
+  cout<< "\n\nDeletando objeto da classe SimsHouse padrão para realocar uma premium...\n";
+  delete casaMeuSimPtr;
+  casaMeuSimPtr =0;
+
+  cout<<"\nCriando SimsHouse Premium com realocação de memória...\n";
+  cout <<"\n ATENÇÃO! O valor mínimo de uma casa SimsHouse premium é de " << SimsHouse::getMinValorPremiumHouse() <<" SimsCash\n";
+  casaMeuSimPtr= new SimsHouse(make_tuple(30, 30),224000,"Sem proprietário","Pôr do sol Plantão 90");
+  casaMeuSimPtr->overview();
+  
   cout<< "\nEfetuando venda da SimsHouse: \n";
-  casaMeuSim.efetuarVenda(meuSim);
-  meuSim.simVisaoGeral();
-  casaMeuSim.overview();
+  casaMeuSimPtr->efetuarVenda(meuSim);
+  meuSimPtr->simVisaoGeral();
+  casaMeuSimPtr->overview();
+  meuSimPtr->verConquistas();
 
   cout<< "\n\nCriando objetos const usando construtor de cópia: \n";
 
   const Sims SYANNE(meuSim);
   //objetos const só podem chamar métodos const
   SYANNE.simVisaoGeral();
+  SYANNE.verConquistas();
 
-  cout<<"criando SimsHouse Premium\n";
-  cout <<"\n ATENÇÃO! O valor mínimo de uma casa SimsHouse premium é de " << SimsHouse::getMinValorPremiumHouse <<" SimsCash\n";
-  SimsHouse HousePremium(make_tuple(30, 30),224000,"Sem proprietário","Pôr do sol Plantão 90");
-  HousePremium.overview();
-  
   //mostrando a quantidade de casas já criadas com atributo static
-  cout<< "\n\nJá foram criadas "<< SimsHouse::getNumSimsHouses() << " SimsHouses \n" ;
-
-  // usando método estatico
-  SimsHouse::mostrarVizinhanca();
+  // cout<< "\n\nJá foram criadas "<< SimsHouse::getNumSimsHouses() << " SimsHouses \n" ;
+  // // usando método estatico
+  // SimsHouse::mostrarVizinhanca();
 
   // usando a ação de limparSimshouse
-  meuSim.limparSimsHouse();
-  
+  meuSimPtr->limparSimsHouse();
+  meuSimPtr->registrarConquista("Dedicação na faxina.");
+  meuSimPtr->verConquistas();
+  meuSimPtr->simVisaoGeral();
   //usando array static
-  cout<< "\nUsando Classe SimsAppearance\n";
-  SimsAppearance teste;
-  teste.visualizarAppearance();
+  cout<< "\nUsando Classe SimsAppearance com alocação de memória\n";
+  SimsAppearance *aparenciaSimsPtr = new SimsAppearance;
+  aparenciaSimsPtr->visualizarAppearance();
 
   // usando método estático da classe SimsAppearance
   SimsAppearance::exibirMenuConfiguracoes();
@@ -84,6 +115,10 @@ int main() {
   // pegar apenas consiguração dos cabelos
   cout << "\n\nBuscando apenas configurações de cabelo: \n";
   SimsAppearance::exibirMenuConfiguracoes(CABELO);
+
+  //Deletes
+  delete casaMeuSimPtr;
+  delete aparenciaSimsPtr;
 
   return 0;
 }

@@ -24,7 +24,7 @@ const string SimsAppearance::LIST_OLHOS[NUMAXCONFIGURACOES] = {"Olhos 1", "Olhos
 const string SimsAppearance::LIST_NARIZ[NUMAXCONFIGURACOES] = {"Nariz 1", "Nariz 2", "Nariz 3"};
 const string SimsAppearance::LIST_BOCA[NUMAXCONFIGURACOES] = {"Boca 1", "Boca 2","Boca 3"};
 const string SimsAppearance::LIST_ORELHA[NUMAXCONFIGURACOES] = {"Orelha 1", "Orelha 2", "Orelha 3"};
-const string SimsAppearance::LIST_CABELO[NUMAXCONFIGURACOES] = {"Divisão Sentral Suave", "Bob Curto Desfiado", "Ondas da praia"};
+const string SimsAppearance::LIST_CABELO[NUMAXCONFIGURACOES] = {"Divisão Central Suave", "Bob Curto Desfiado", "Ondas da praia"};
 const string SimsAppearance::LIST_SOBRANCELHA[NUMAXCONFIGURACOES] = {"Delicadamente Arqueada", "Naturalmente Arqueadas", "Sobrancelha3"};
 
 // construtores
@@ -56,7 +56,7 @@ SimsAppearance::SimsAppearance(const SimsAppearance &other)
 // destrutor 
 SimsAppearance::~SimsAppearance()
 {
-
+    cout<<"Deletando objeto SimsAppearance\n";
 }
 
 // métodos set e get

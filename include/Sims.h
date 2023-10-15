@@ -36,6 +36,12 @@ class Sims
         string getColor(int) const;
         void limparSimsHouse(); 
 
+        void registrarConquista(const string &);
+        void verConquistas() const;
+
+        void fazerApresentacaoAgradavel(const Sims &);
+        void verContatos() const;
+
     private:
         // atributos sempre na parte privada
         string nome;
@@ -45,6 +51,7 @@ class Sims
         double energia; // entre 0 a 30
         double simCash;
         string endereco;
+        int experiencia;
 
         const int MAXTAMNOMES = 12; // Tamanho max pra nomes, sobrenomes
         const int MAXTAMENDERECO = 25;
@@ -52,6 +59,22 @@ class Sims
 
         //atributo static const
         static const int ENERGIAMIN = 5; // energia min pra bem estar do Sim
+
+        //alocação dinâmica de memória
+        //guarda o histórico de conquistas do personagem que contribuirá com o nível de jogo 
+        string *conquistasPtr;
+        int conquistasSize;//tamanho alocado pra conquistasPtr*
+        int proxConquista; //quantidade de conquistas do personagem
+        void alocarConquistas( const string &);//método pra aumentar a memória disponível em conquistaPtr;
+
+        //guarda o histórico de contatos de personagem conforme iterage com os demais 
+        string *contatosPtr;
+        int contatosSize;//tamanho alocado proa contatos do personagem
+        int proxContato; //quantidade de contatos do personagem
+        void alocarContatos( const string &);//método pra aumentar a memória disponível em contatosPtr;
+
+        bool verificarContatoExistente(const string &) const;
+
 };
 
 #endif // SIMS_H
