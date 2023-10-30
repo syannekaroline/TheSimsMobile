@@ -2,12 +2,17 @@
 #include <iostream>
 #include <string>
 #include <tuple>
+#include <algorithm>
+#include <iterator>
 
 using std::cout;
 using std::make_tuple;
 using std::left;
 using std::setw;
 using std::setfill;
+using std::find;
+using std::begin;
+using std::end;
 
 #include "SimsHouse.h"
 const string VERDE = "\033[1;32m";  // VERDE
@@ -21,7 +26,7 @@ string SimsHouse::enderecosList[ MAXNUMENDERECOS ];
 // CONSTRUTORES
 // Construtor padrão -> inicializar objetos com valores padrão pré-definidos.
 SimsHouse::SimsHouse()
-:ENDERECO("Alameda Esmeralda, 324"),proporcaoTerreno(make_tuple(30, 30)),premium(false), valor(0.0)
+:ENDERECO("Alameda Esmeralda, 324"),proporcaoTerreno(make_tuple(30, 30)),premium(false), valor(0.0),housefeatures{}
 {
   cout << "Construindo SimHouse padrão.\n";
   enderecosList[numEnderecos] = ENDERECO;
@@ -29,7 +34,7 @@ SimsHouse::SimsHouse()
 }
 
 // Construtor com com parâmetros -> permite a personalização dos atributos
-SimsHouse::SimsHouse(const tuple<int, int> & proporcaoTerreno,double valor,const string &  proprietario,const string & ENDERECO)
+SimsHouse::SimsHouse(const tuple<int, int> & proporcaoTerreno,double valor,const string & ENDERECO,const string &  proprietario )
 :ENDERECO(ENDERECO)
 {
     cout << "Inicializando SimHouse.\n";
@@ -104,32 +109,10 @@ double SimsHouse::getValor() const
 
 string SimsHouse::getProprietario() const 
 { 
-    return proprietario; 
+    return (proprietario=="")? "Sem proprietário" : proprietario; 
 }
 
 //demais métodos
-void SimsHouse::overview() const 
-{
-    cout << "==========================================\n";
-    cout <<R"(
-  ____     ___                       _               
- / /\ \   / _ \__   _____ _ ____   _(_) _____      __
-/ /  \ \ | | | \ \ / / _ \ '__\ \ / / |/ _ \ \ /\ / /
-\ \  / / | |_| |\ V /  __/ |   \ V /| |  __/\ V  V / 
- \_\/_/_  \___/  \_/ \___|_|    \_/ |_|\___| \_/\_/  
-/ ___|(_)_ __ ___  ___| | | | ___  _   _ ___  ___    
-\___ \| | '_ ` _ \/ __| |_| |/ _ \| | | / __|/ _ |   
- ___) | | | | | | \__ \  _  | (_) | |_| \__ \  __/   
-|____/|_|_| |_| |_|___/_| |_|\___/ \__,_|___/\___|  
-
-    )";
-  cout << (premium ? "Premium💎" : "")<< "\n";
-  cout << "==========================================\n";
-  cout << "\033[1;32m ❇️ Endereço: \033[0m" << ENDERECO<< "\n";
-  cout << "\033[1;32m ❇️ valor: \033[0m" << valor << " SimsCash\n";
-  cout << "\033[1;32m ❇️ proprietario: \033[0m" << proprietario <<"\n";
-  cout << "============================================\n";
-}
 
 void SimsHouse::efetuarVenda(Sims &novoProprietario) 
 {
@@ -165,4 +148,90 @@ void SimsHouse::mostrarVizinhanca()
         cout << "\033[1;32m ❇️ \033[0m" << enderecosList[i]<< "\n";
     }
     cout << "\n==========================================\n";
+}
+
+//operadores
+ostream &operator<<(ostream &out, const SimsHouse &house)
+{
+    cout << "==========================================\n";
+    cout <<R"(
+  ____     ___                       _               
+ / /\ \   / _ \__   _____ _ ____   _(_) _____      __
+/ /  \ \ | | | \ \ / / _ \ '__\ \ / / |/ _ \ \ /\ / /
+\ \  / / | |_| |\ V /  __/ |   \ V /| |  __/\ V  V / 
+ \_\/_/_  \___/  \_/ \___|_|    \_/ |_|\___| \_/\_/  
+/ ___|(_)_ __ ___  ___| | | | ___  _   _ ___  ___    
+\___ \| | '_ ` _ \/ __| |_| |/ _ \| | | / __|/ _ |   
+ ___) | | | | | | \__ \  _  | (_) | |_| \__ \  __/   
+|____/|_|_| |_| |_|___/_| |_|\___/ \__,_|___/\___|  
+
+    )";
+  cout << (house.premium ? "Premium💎" : "")<< "\n";
+  cout << "==========================================\n";
+  cout << "\033[1;32m ❇️ Endereço: \033[0m" << house.ENDERECO<< "\n";
+  cout << "\033[1;32m ❇️ valor: \033[0m" << house.valor << " housesCash\n";
+  cout << "\033[1;32m ❇️ proprietario: \033[0m" << house.getProprietario() <<"\n";
+  cout << "============================================\n";
+
+  return cout;
+}
+
+void SimsHouse::setFeatures(const vector<string>& comodos, int numAndares, bool temPiscina, string estilo) {
+    housefeatures.comodos = comodos;
+    housefeatures.numAndares = numAndares;
+    housefeatures.temPiscina = temPiscina;
+    housefeatures.estilo = estilo;
+}
+
+void SimsHouse::addComodo(const string& comodo) {
+    housefeatures.comodos.push_back(comodo);
+}
+
+void SimsHouse::removeComodo(const string& comodo)
+{
+    auto it = find(housefeatures.comodos.begin(), housefeatures.comodos.end(), comodo);
+    if (it != housefeatures.comodos.end()) {
+        housefeatures.comodos.erase(it);
+        cout << "Cômodo '" << comodo << "' removido com sucesso." << "\n";
+    } else {
+        cout << "Cômodo '" << comodo << "' não encontrado na lista." << "\n";
+    }
+}
+
+void SimsHouse::verFeatures() const {
+    cout << "Características da casa em " << ENDERECO << ":" << "\n";
+    cout << "Número de andares: " << housefeatures.numAndares << "\n";
+    cout << "Estilo: " << housefeatures.estilo << "\n";
+    cout << "Possui piscina: " << (housefeatures.temPiscina ? "Sim" : "Não") << "\n";
+
+    cout << housefeatures.comodos.size()<<" Cômodos:" << "\n";
+    for (const string& comodo : housefeatures.comodos) {
+        cout << " ❇️ " << comodo << "\n";
+    }
+}
+
+//operadores
+// Assignment operator
+const SimsHouse &SimsHouse::operator=(const SimsHouse &house) {
+    if (this != &house) {
+
+        this->proporcaoTerreno = house.proporcaoTerreno;
+        this->premium = house.premium;
+        this->valor = house.valor;
+        this->proprietario = house.proprietario;
+    }
+    return *this;
+}
+
+// Comparison operators
+int SimsHouse::operator==(const SimsHouse &house) const {
+    return (this->ENDERECO == house.ENDERECO);
+}
+
+int SimsHouse::operator!=(const SimsHouse &house) const {
+    return !(*this == house);
+}
+
+bool SimsHouse::operator!() const { // verifica se a casa já tem proprietário 
+    return (proprietario == "")? true: false;
 }

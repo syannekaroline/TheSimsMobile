@@ -2,6 +2,7 @@
 #include <string>
 #include <unistd.h>
 #include <cmath>
+#include <assert.h>
 
 using std::cout;
 
@@ -10,13 +11,14 @@ using std::cout;
 // CONSTRUTORES
 // Construtor padrão -> inicializar objetos com valores padrão pré-definidos.
 Sims::Sims()
-: nome("Fulana"), sobrenome("da Silva"), genero('F'),tonalidadeDaPele(7),energia(20),simCash(300),endereco(""),experiencia(0),conquistasPtr(0),conquistasSize(0),contatosPtr(0),contatosSize(0)
+: nome("Fulana"), sobrenome("da Silva"), genero('F'),tonalidadeDaPele(7),energia(20),simCash(300),endereco(""),experiencia(0),conquistasPtr(0),conquistasSize(0),contatosPtr(0),contatosSize(0),aparencia()
 {
     cout << "Inicializando Sim.\n";
 }
 
 // Construtor com com parâmetros -> permite a personalização dos atributos
 Sims::Sims(string nome, string sobrenome, char genero, int tonalidadeDaPele,double energia,double simCash,string endereco)
+:aparencia()
 {
     conquistasSize = 0;
     proxConquista=0;
@@ -38,6 +40,7 @@ Sims::Sims(string nome, string sobrenome, char genero, int tonalidadeDaPele,doub
 }
 
 Sims::Sims(const Sims & simCopia)
+:aparencia(simCopia.aparencia)
 {
     cout << "Inicializando Sim.\n";
 
@@ -58,7 +61,7 @@ Sims::Sims(const Sims & simCopia)
     //alocação dinâmica pra lista de coquistas do personagem
     this->contatosSize = simCopia.contatosSize;
     this->proxContato = simCopia.proxContato;
-    this->contatosPtr = new string[ this->contatosSize ];
+    this->contatosPtr = new Sims[ this->contatosSize ];
 
     for( int i = 0; i < proxConquista; i++ )
         this->conquistasPtr[ i ] = simCopia.conquistasPtr[ i ];
@@ -175,34 +178,13 @@ void Sims::setEndereco(string endereco)
     }
     this->endereco = endereco; 
 }
+
 // Demais métodos
-void Sims::simVisaoGeral() const 
+void Sims::verAparencia() const
 {
-    string generoSimbolo =  (genero == 'F') ? "♀" : "♂";
-
-        cout<<R"(
-    ______     ___      /\/|                              _ 
-   / /\ \ \   / (_)___ |/\/_  ___     __ _  ___ _ __ __ _| |
-  / /  \ \ \ / /| / __|/ _` |/ _ \   / _` |/ _ \ '__/ _` | |
- / / _  \ \ V / | \__ \ (_| | (_) | | (_| |  __/ | | (_| | |
-/_/_(_)_ \_\_/_ |_|___/\__,_|\___/   \__, |\___|_|  \__,_|_|
-/ __| | '_ ` _ ||                     |___/                  
-\__ \ | | | | |||                                           
-|___/_|_| |_| |||                                           
-\ \      / /                                                
- \ \    / /                                                 
-  \ \  / /                                                  
-   \_\/_/                                                   )"<<"\n";
-
-    cout << "\n==========================\n";
-    cout << "\033[1;32m ❇️ Nome: \033[0m" << nome << " " << sobrenome << "\n";
-    cout << "\033[1;32m ❇️ Gênero: \033[0m" << generoSimbolo << "\n";
-    cout << "\033[1;32m ❇️ Tonalidade da Pele \033[0m: " << getColor(tonalidadeDaPele) << "\n";
-    cout << "\033[1;32m ❇️ Energia: \033[0m" << energia << "\n";
-    cout << "\033[1;32m ❇️ SimCash: \033[0m" << simCash <<"\n";
-    cout << "\033[1;32m ❇️ Endereço: \033[0m" << endereco <<"\n";
-    cout << "\033[1;32m ❇️ Experiência: \033[0m" << experiencia <<" xp \n";
     cout << "==========================\n";
+    cout << "\033[1;32m Aparência " << nome << " " << sobrenome << "\033[0m\n";
+    cout << aparencia;
 }
 
 void Sims::descansar() 
@@ -242,7 +224,7 @@ void Sims::descansar()
     cout << "\nDescanso concluído!🔋\n";
 }
 
-string Sims::getColor(int color ) const 
+string Sims::getColor(int color )
 {   
     // Recebe um valor inteiro color e retorna a string correspondente ao emoji da cor.
     
@@ -349,7 +331,7 @@ void Sims::registrarConquista( const string &conquista)
         return;
     }
 
-    alocarConquistas(conquista); // caso não tenha espaço pra alocar -> chama o método alocarConquistas(conquista) para aumentar a memória e adicionar a conquista no novo array.
+    alocarConquistas(conquista); // caso não tenha espaço pra alocar -> chama o método alocarConquistas(conquista) para aumentar a memória e adicionar a conquista no novo Sims.
 }
 
 void Sims::verConquistas( ) const
@@ -380,75 +362,193 @@ void Sims::verConquistas( ) const
     
  }
 
-void Sims::alocarContatos(const string &contato)
-{  
-	//Aloca mais memória pra armazenar dinâmicamente a lista de contatos do personagem
-    contatosSize += int( ceil( contatosSize * 0.5 ) );//Aumenta a memória em 50%
-    string *contatosTemp = new string[ contatosSize ];
-    for( int i = 0; i < proxContato; i++ )
-        contatosTemp[ i ] = contatosPtr[ i ];
-
-    delete [] contatosPtr;   
+void Sims::alocarContatos(const Sims &contato) {
+    // Aloca mais memória para armazenar dinamicamente a lista de contatos do personagem
+    contatosSize += int(ceil(contatosSize * 0.5)); // Aumenta a memória em 50%
+    Sims *contatosTemp = new Sims[contatosSize];
+    
+    for (int i = 0; i < proxContato; i++) {
+        contatosTemp[i] = contatosPtr[i];
+    }
+    
+    delete[] contatosPtr;
     contatosPtr = contatosTemp;
-    contatosPtr[ proxContato++ ] = contato;
+    contatosPtr[proxContato++] = contato;
 }
 
-bool Sims::verificarContatoExistente(const string& str) const
+bool Sims::verificarContatoExistente(const Sims& contato) const
 {
     //verifica se um personagem já faz parte da lista de contatos
     for (int i = 0; i < proxContato; ++i)
     {
-        if (contatosPtr[i] == str)
+        if (contatosPtr[i] == contato)
             return true;  // O contato já foi registrado
     }
     return false;  // novo contato
 }
 
-void Sims::fazerApresentacaoAgradavel( const Sims &sim)
-{
-    //adiciona um personagem na lista dinâmica de contatos
-    string novoContato = sim.getNome()+" "+sim.getSobrenome();
-    if(verificarContatoExistente(novoContato))
-    {
-        cout << nome << sobrenome << " e " << novoContato<<" já se conhecem\n";
+void Sims::fazerApresentacaoAgradavel(const Sims &sim) {
+    // Adiciona um personagem na lista dinâmica de contatos
+    if (verificarContatoExistente(sim)) {
+        cout << nome << " " << sobrenome << " e " << sim.getNome() << " " << sim.getSobrenome() << " já se conhecem\n";
         return;
     }
-    cout << "\nApresentação agradável entre "<<nome <<" "<<sobrenome<<" e "<< novoContato<<"\n";
-    int ganhoXp=5;
+    cout << "\nApresentação agradável entre " << nome << " " << sobrenome << " e " << sim.getNome() << " " << sim.getSobrenome() << "\n";
+    int ganhoXp = 5;
     // Loop para simular a apresentação dos sims
-    for (int i =0; i<ganhoXp;i++)
-    {
-        experiencia+1;
-        cout << "💬"<<std::flush;
-        sleep (1);  // Pausa de 1 segundo
+    for (int i = 0; i < ganhoXp; i++) {
+        experiencia += 1;
+        cout << "💬" << std::flush;
+        sleep(1); // Pausa de 1 segundo
     }
     cout << "\nApresentação agradável concluída 👥 \n";
 
-    if(proxContato < contatosSize)
-    {
-        contatosPtr[proxContato++] = novoContato;
+    if (proxContato < contatosSize) {
+        contatosPtr[proxContato++] = sim;
         return;
     }
 
-    if( contatosSize==0)
-    {
+    if (contatosSize == 0) {
         contatosSize = 1;
-        contatosPtr = new string[contatosSize];
-        contatosPtr[proxContato++] = novoContato;
+        contatosPtr = new Sims[contatosSize];
+        contatosPtr[proxContato++] = sim;
         return;
     }
 
-    alocarContatos(novoContato);
+    alocarContatos(sim); // Caso não tenha espaço para alocar, chama o método alocarContatos para aumentar a memória e adicionar o contato no novo Sims.
+}
+
+void Sims::verContatos() const {
+    // Mostra a lista de contatos do personagem
+    cout << "Contatos de " << nome << " " << sobrenome << "\n";
+    cout << "==========================\n";
+    for (int i = 0; i < proxContato; i++) {
+        cout << "❇️ " << contatosPtr[i].getNome() << " " << contatosPtr[i].getSobrenome() << '\n';
+    }
+    cout << "==========================\n";
 }
 
 
-void Sims::verContatos( ) const
-{ 
-    //mostra a lista de contatos do personagem
-    cout<<"Contatos de "<<nome <<" "<<sobrenome<<"\n";
-    cout << "==========================\n";
-    for( int i = 0; i < proxContato; i++ )
-        cout << "❇️ "<< contatosPtr[ i ] << '\n';
+//Operadores
+ostream &operator<<(ostream &out, const Sims &sim)
+{
+    string generoSimbolo =  (sim.genero == 'F') ? "♀" : "♂";
+
+        cout<<R"(
+    ______     ___      /\/|                              _ 
+   / /\ \ \   / (_)___ |/\/_  ___     __ _  ___ _ __ __ _| |
+  / /  \ \ \ / /| / __|/ _` |/ _ \   / _` |/ _ \ '__/ _` | |
+ / / _  \ \ V / | \__ \ (_| | (_) | | (_| |  __/ | | (_| | |
+/_/_(_)_ \_\_/_ |_|___/\__,_|\___/   \__, |\___|_|  \__,_|_|
+/ __| | '_ ` _ ||                     |___/                  
+\__ \ | | | | |||                                           
+|___/_|_| |_| |||                                           
+\ \      / /                                                
+ \ \    / /                                                 
+  \ \  / /                                                  
+   \_\/_/                                                   )"<<"\n";
+
+    cout << "\n==========================\n";
+    cout << "\033[1;32m ❇️ Nome: \033[0m" << sim.nome << " " << sim.sobrenome << "\n";
+    cout << "\033[1;32m ❇️ Gênero: \033[0m" << generoSimbolo << "\n";
+    cout << "\033[1;32m ❇️ Tonalidade da Pele \033[0m: " << sim.getColor(sim.tonalidadeDaPele) << "\n";
+    cout << "\033[1;32m ❇️ Energia: \033[0m" << sim.energia << "\n";
+    cout << "\033[1;32m ❇️ SimCash: \033[0m" << sim.simCash <<"\n";
+    cout << "\033[1;32m ❇️ Endereço: \033[0m" << sim.endereco <<"\n";
+    cout << "\033[1;32m ❇️ Experiência: \033[0m" << sim.experiencia <<" xp \n";
     cout << "==========================\n";
 
+    return out;
+}
+
+// Operador de atribuição
+const Sims &Sims::operator=(const Sims &other)
+{
+    if (this != &other) {  // Verifica se não estamos atribuindo a si mesmo
+        nome = other.nome;
+        sobrenome = other.sobrenome;
+        genero = other.genero;
+        tonalidadeDaPele = other.tonalidadeDaPele;
+        energia = other.energia;
+        simCash = other.simCash;
+        endereco = other.endereco;
+        experiencia = other.experiencia;
+        aparencia = other.aparencia;
+
+        // Copiar as conquistas
+        if (conquistasSize != other.conquistasSize) {
+            delete[] conquistasPtr;
+            conquistasSize = other.conquistasSize;
+            conquistasPtr = new string[conquistasSize];
+        }
+        for (int i = 0; i < conquistasSize; i++) {
+            conquistasPtr[i] = other.conquistasPtr[i];
+        }
+        proxConquista = other.proxConquista;
+
+        // Copiar os contatos
+        if (contatosSize != other.contatosSize) {
+            delete[] contatosPtr;
+            contatosSize = other.contatosSize;
+            contatosPtr = new Sims[contatosSize];
+        }
+        for (int i = 0; i < contatosSize; i++) {
+            contatosPtr[i] = other.contatosPtr[i];
+        }
+        proxContato = other.proxContato;
+    }
+    return *this;
+}
+
+// Operador de atribuição de aparência
+const Sims &Sims::operator=(const SimsAppearance &aparenciaNova) {
+    if (&aparencia != &aparenciaNova) // Verifica se não estamos atribuindo a si mesmo
+        aparencia = aparenciaNova;
+    return *this;
+}
+// Operador de comparação igual (compare equal)
+bool Sims::operator==(const Sims &other) const 
+{
+    // Comparar os atributos simples
+    if (nome != other.nome || sobrenome != other.sobrenome ||
+        genero != other.genero || tonalidadeDaPele != other.tonalidadeDaPele ||
+        energia != other.energia || simCash != other.simCash ||
+        endereco != other.endereco || experiencia != other.experiencia || aparencia != other.aparencia) {
+        return false;  // Não são iguais
+    }
+
+    // Comparar as alocações de memória para conquistas
+    if (conquistasSize != other.conquistasSize) {
+        return false;  // Não são iguais
+    }
+    for (int i = 0; i < conquistasSize; i++) {
+        if (conquistasPtr[i] != other.conquistasPtr[i]) {
+            return false;  // Não são iguais
+        }
+    }
+
+    // Comparar as alocações de memória para contatos
+    if (contatosSize != other.contatosSize) {
+        return false;  // Não são iguais
+    }
+    for (int i = 0; i < contatosSize; i++) {
+        if (contatosPtr[i] != other.contatosPtr[i]) {
+            return false;  // Não são iguais
+        }
+    }
+
+    // Se todos os atributos e alocações de memória coincidirem, são iguais
+    return true;
+}
+
+// Operador de comparação não igual (compare !equal)
+int Sims::operator!=(const Sims &other) const
+{
+    return !(*this == other);
+}
+
+//operador not verifica se o sim não está ativo no jogo
+bool Sims::operator!() const
+{
+    return (experiencia == 0)? true : false;
 }

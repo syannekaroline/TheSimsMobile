@@ -6,6 +6,10 @@ set(SOURCES
     src/Sims.cpp
     src/SimsHouse.cpp
     src/SimsAppearance.cpp
+    src/SimsGame.cpp
+    src/Data.cpp
+    src/infosGame.txt
+
     # Adicione mais arquivos fonte se você tiver mais classes
 )
 

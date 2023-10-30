@@ -1,12 +1,19 @@
 #ifndef SIMS_H
 #define SIMS_H
 // A classe é protegida contra inclusões múltiplas em outros arquivos usando a diretiva de pré-processamento
-
+#include <iostream>
+using std::ostream;
+using std::cout;
 #include <string>
 using std::string;
 
+#include "SimsAppearance.h"
+#include "Sims.h"
+
 class Sims 
 {
+    friend ostream &operator<<(ostream &, const Sims &);
+
     public:
         // construtores e destrutores sempre começam a parte pública da classe
         Sims(); // Construtor-> método chamado pra inicializar os atributos a classe
@@ -31,9 +38,8 @@ class Sims
         double getSimCash() const;
         string getEndereco() const;
 
-        void simVisaoGeral() const; //método mostra os atributos de um sim
         void descansar();  //método que carrega a energia do sim
-        string getColor(int) const;
+        static string getColor(int);
         void limparSimsHouse(); 
 
         void registrarConquista(const string &);
@@ -41,6 +47,13 @@ class Sims
 
         void fazerApresentacaoAgradavel(const Sims &);
         void verContatos() const;
+        void verAparencia() const;
+        //operadores
+        const Sims &operator=(const Sims &); //assign Sims
+        const Sims &operator=(const SimsAppearance &); //Sims recebe uma aparência
+        bool operator==(const Sims &) const; //compare equal
+        int operator!=(const Sims &) const; //compare !equal
+        bool operator!() const; //verifica se o sims não está ativo no jogo
 
     private:
         // atributos sempre na parte privada
@@ -52,6 +65,8 @@ class Sims
         double simCash;
         string endereco;
         int experiencia;
+
+        SimsAppearance aparencia; // composição
 
         const int MAXTAMNOMES = 12; // Tamanho max pra nomes, sobrenomes
         const int MAXTAMENDERECO = 25;
@@ -68,12 +83,12 @@ class Sims
         void alocarConquistas( const string &);//método pra aumentar a memória disponível em conquistaPtr;
 
         //guarda o histórico de contatos de personagem conforme iterage com os demais 
-        string *contatosPtr;
+        Sims *contatosPtr;
         int contatosSize;//tamanho alocado proa contatos do personagem
         int proxContato; //quantidade de contatos do personagem
-        void alocarContatos( const string &);//método pra aumentar a memória disponível em contatosPtr;
+        void alocarContatos( const Sims &);//método pra aumentar a memória disponível em contatosPtr;
 
-        bool verificarContatoExistente(const string &) const;
+        bool verificarContatoExistente(const Sims &) const;
 
 };
 

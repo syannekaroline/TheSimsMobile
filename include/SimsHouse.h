@@ -7,8 +7,25 @@
 using std::string;
 using std::tuple;
 
+#include <iostream>
+using std::ostream;
+
+#include <vector>
+using std::vector;
+
+struct features
+{
+  vector <string> comodos;
+  int numAndares;
+  bool temPiscina;
+  string estilo;
+};
+
 class SimsHouse 
 {
+  
+  friend ostream &operator<<(ostream &, const SimsHouse &);
+  
   public:
     // construtores e destrutores sempre começam a parte pública da classe
     SimsHouse(); // Construtor-> método chamado pra inicializar os atributos a classe
@@ -28,20 +45,31 @@ class SimsHouse
     string getProprietario() const;
 
     //Demais métodos 
-    void overview() const;
     void efetuarVenda(Sims &);
+    void setFeatures(const vector<string>& ,int,bool,string);
+    void addComodo(const string& );
+    void removeComodo(const string&);
+    void verFeatures() const;
 
     //métodos statics
     inline static int getNumSimsHouses(){ return numEnderecos;};
     inline static double getMinValorPremiumHouse(){ return MINVALORPREMIUM;};
 
     static void mostrarVizinhanca();
+
+    //operadores
+    const SimsHouse &operator=(const SimsHouse &);  // assign SimsHouse
+    int operator==(const SimsHouse &) const; // compare equal
+    int operator!=(const SimsHouse &) const; // compare !equal
+    bool operator!() const;
+
   private:
 
     tuple<int,int> proporcaoTerreno;
     bool premium;
     double valor; // em simCash
     string proprietario;
+    features housefeatures;
 
     const string ENDERECO;
     const int MAXTAMSTRINGS= 25;

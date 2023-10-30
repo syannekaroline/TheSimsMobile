@@ -1,8 +1,10 @@
 #include <iostream>
 #include <algorithm>  // Inclua esta biblioteca para utilizar find
 #include <iomanip> // Para controlar largura da coluna
+#include <iterator>
 
 #include "SimsAppearance.h"
+#include "Sims.h"
 
 using std::cout;
 using std::find;
@@ -29,9 +31,9 @@ const string SimsAppearance::LIST_SOBRANCELHA[NUMAXCONFIGURACOES] = {"Delicadame
 
 // construtores
 SimsAppearance::SimsAppearance()
-:cabeca(LIST_CABECA[0]), olhos(LIST_OLHOS[0]), nariz(LIST_NARIZ[0]), boca(LIST_BOCA[0]), orelha(LIST_ORELHA[0]), cabelo(LIST_CABELO[2]),sobrancelha(LIST_SOBRANCELHA[1])
+: config{LIST_CABECA[0], LIST_OLHOS[0], LIST_NARIZ[0], LIST_BOCA[0], LIST_ORELHA[0], LIST_CABELO[2], LIST_SOBRANCELHA[1]}
 {
-    cout << "Criando aparência do Sims com construtor padrão";
+    cout << "Criando aparência do Sims com construtor padrão\n";
 }
 
 SimsAppearance::SimsAppearance(const string &cabeca, const string &olhos, const string &nariz, const string &boca,const string & orelha, const string &cabelo, const string &sobrancelha) 
@@ -47,8 +49,7 @@ SimsAppearance::SimsAppearance(const string &cabeca, const string &olhos, const 
 }
 
 SimsAppearance::SimsAppearance(const SimsAppearance &other)
-    :cabeca(other.cabeca), olhos(other.olhos), nariz(other.nariz),boca(other.boca),
-    orelha(other.orelha),cabelo(other.cabelo), sobrancelha(other.sobrancelha)
+:config{other.config}
 {
     cout << "Criando aparência do Sim...";
 }
@@ -65,110 +66,110 @@ void SimsAppearance::setCabeca(const string &cabeca)
 {
     if (find(begin(LIST_CABECA), end(LIST_CABECA), cabeca) != end(LIST_CABECA))
     {
-        this->cabeca = cabeca;
+        this->config.cabeca = cabeca;
         return;
     }
 
     cout << "Configuracao de cabeça invalida!\n";
-    this->cabeca = "";
+    this->config.cabeca = "";
 
 }
 void SimsAppearance::setOlhos(const string &olhos)
 {
     if (find(begin(LIST_OLHOS), end(LIST_OLHOS), olhos) != end(LIST_OLHOS))
     {
-        this->olhos = olhos;
+        this->config.olhos = olhos;
         return;
     }
     cout << "Configuracao de olhos invalida!\n";
-    this->olhos = "";
+    this->config.olhos = "";
     
 }
 
 void SimsAppearance::setNariz(const string &nariz)
 {
     if (find(begin(LIST_NARIZ), end(LIST_NARIZ), nariz) != end(LIST_NARIZ)) {
-        this->nariz = nariz;
+        this->config.nariz = nariz;
         return;
     }
     cout << "Configuracao de nariz invalida!\n";
-    this->nariz = "";
+    this->config.nariz = "";
 }
 
 void SimsAppearance::setBoca(const string &boca)
 {
     if (find(begin(LIST_BOCA), end(LIST_BOCA), boca) != end(LIST_BOCA))
     {
-        this->boca = boca;
+        this->config.boca = boca;
         return;
     }
     cout << "Configuracao de boca invalida!\n";
-    this->boca = "";
+    this->config.boca = "";
 }
 
 void SimsAppearance::setOrelha(const string &orelha) {
     if (find(begin(LIST_ORELHA), end(LIST_ORELHA), orelha) != end(LIST_ORELHA))
     {
-        this->orelha = orelha;
+        this->config.orelha = orelha;
         return;
     }
     cout << "Configuracao de orelha invalida!\n";
-    this->orelha = "";
+    this->config.orelha = "";
 
 }
 
 void SimsAppearance::setCabelo(const string &cabelo) {
     if (find(begin(LIST_CABELO), end(LIST_CABELO), cabelo) != end(LIST_CABELO)) {
-        this->cabelo = cabelo;
+        this->config.cabelo = cabelo;
         return;
     }
     cout << "Configuracao de cabelo invalida!\n";
-    this->cabelo = "";
+    this->config.cabelo = "";
 
 }
 
 void SimsAppearance::setSobrancelha(const string &sobrancelha) {
     if (find(begin(LIST_SOBRANCELHA), end(LIST_SOBRANCELHA), sobrancelha) != end(LIST_SOBRANCELHA))
     {
-        this->sobrancelha = sobrancelha;
+        this->config.sobrancelha = sobrancelha;
         return;
     }
     cout << "Configuracao de sobrancelha invalida!\n";
-    this->sobrancelha = "";
+    this->config.sobrancelha = "";
     
 }
 
 string SimsAppearance::getCabeca() const
 {
-    return cabeca;
+    return config.cabeca;
 }
 
 string SimsAppearance::getOlhos() const
 {
-    return olhos;
+    return config.olhos;
 }
 
 string SimsAppearance::getNariz() const
 {
-    return nariz;
+    return config.nariz;
 }
 
 string SimsAppearance::getBoca() const
 {
-    return boca;
+    return config.boca;
 }
 
 string SimsAppearance::getCabelo() const
 {
-    return cabelo;
+    return config.cabelo;
 }
 string SimsAppearance::getOrelha() const
 {
-    return orelha;
+    return config.orelha;
 }
 string SimsAppearance::getSobrancelha() const
 {
-    return sobrancelha;
+    return config.sobrancelha;
 }
 
 // demais métodos
@@ -248,17 +249,79 @@ void SimsAppearance::exibirMenuConfiguracoes(int opcao)
 
 }
 
-void SimsAppearance::visualizarAppearance() const {
+//operadores
 
+ostream &operator<<(ostream &out, const SimsAppearance &sim)
+{
   cout << "\n==========================\n";
   cout << "\033[1;32m ❇️ Visualizar configurações de aparência ❇️ \033[0m\n";
   cout << "\n==========================\n";
-  cout << "\033[1;32m 👤 Cabeca: \033[0m" << cabeca << "\n";
-  cout << "\033[1;32m 👀 Olhos: \033[0m" << olhos << "\n";
-  cout << "\033[1;32m 👃 Nariz: \033[0m" << nariz << "\n";
-  cout << "\033[1;32m 👄 Boca: \033[0m" << boca << "\n";
-  cout << "\033[1;32m 👂 Cabelo: \033[0m" << cabelo << "\n";
-  cout << "\033[1;32m 💇 Orelha: \033[0m" << orelha << "\n";
-  cout << "\033[1;32m 🤨 Sobrancelha: \033[0m" << sobrancelha << "\n";
+  cout << "\033[1;32m 👤 Cabeca: \033[0m" << sim.config.cabeca <<" | "<< sim.getColor("cabeça")<<"\n";
+  cout << "\033[1;32m 👀 Olhos: \033[0m" << sim.config.olhos <<" | "<< sim.getColor("olhos")<<"\n";
+  cout << "\033[1;32m 👃 Nariz: \033[0m" << sim.config.nariz <<" | "<< sim.getColor("nariz")<<"\n";
+  cout << "\033[1;32m 👄 Boca: \033[0m" << sim.config.boca <<" | "<< sim.getColor("boca")<<"\n";
+  cout << "\033[1;32m 👂 Cabelo: \033[0m" << sim.config.cabelo <<" | "<< sim.getColor("cabelo")<<"\n";
+  cout << "\033[1;32m 💇 Orelha: \033[0m" << sim.config.orelha <<" | "<< sim.getColor("orelha")<<"\n";
+  cout << "\033[1;32m 🤨 Sobrancelha: \033[0m" << sim.config.sobrancelha <<" | "<< sim.getColor("sobrancelha")<<"\n";
   cout << "==========================\n";
+
+  return out;
 }
+
+void SimsAppearance::setColor(string opcao,int color)
+{
+    config.color[opcao] = Sims::getColor(color);
+}
+
+string SimsAppearance::getColor( string opcao) const
+{
+    try {
+        return config.color.at(opcao); //Lança uma exceção std::out_of_range se a chave não for encontrada no mapa. Portanto, é uma maneira mais segura de acessar elementos quando você deseja ter certeza de que a chave existe. Diferente de [] que não gera exeção
+    }catch (const std::out_of_range&) {
+        // Trate a situação em que a opção não existe no mapa
+        return ""; // Retorna uma string vazia como valor padrão.
+    }
+}
+
+
+const SimsAppearance &SimsAppearance::operator=(const SimsAppearance &other) {
+    if (this == &other) {
+        return *this; // Verificação para autopr atribuição
+    }
+    config = other.config;
+    return *this;
+}
+
+int SimsAppearance::operator==(const SimsAppearance &other) const {
+    return config.cabeca == other.config.cabeca &&
+           config.olhos == other.config.olhos &&
+           config.nariz == other.config.nariz &&
+           config.boca == other.config.boca &&
+           config.orelha == other.config.orelha &&
+           config.cabelo == other.config.cabelo &&
+           config.sobrancelha == other.config.sobrancelha;
+}
+
+int SimsAppearance::operator!=(const SimsAppearance &other) const {
+    return !(*this == other);
+}
+
+// Função  para atribuir "" a uma string
+void SimsAppearance::limpaCaracteristica(  string &caracteristica ) {
+    caracteristica = ""; 
+};
+
+void SimsAppearance::operator!() // "zera"/"esvazia" aparência;
+{
+    limpaCaracteristica(config.cabeca);
+    limpaCaracteristica(config.olhos);
+    limpaCaracteristica(config.nariz);
+    limpaCaracteristica(config.boca);
+    limpaCaracteristica(config.orelha);
+    limpaCaracteristica(config.cabelo);
+    limpaCaracteristica(config.sobrancelha);
+
+    for (auto& item : config.color) {
+        limpaCaracteristica(item.second);
+    }
+};

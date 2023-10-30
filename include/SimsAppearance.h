@@ -5,9 +5,29 @@
 #include <string>
 using std::string;
 
-// criar um método pra
+#include <iostream>
+using std::ostream;
+
+#include <map>
+using std::map;
+
+struct caracteristicas
+{
+  string cabeca;
+  string olhos;
+  string nariz;
+  string boca;
+  string orelha;
+  string cabelo;
+  string sobrancelha;
+  map<string,string> color;
+};  
+
 class SimsAppearance
 {
+
+  friend ostream &operator<<(ostream &, const SimsAppearance &);
+
   public:
 
     SimsAppearance();
@@ -37,21 +57,20 @@ class SimsAppearance
     void setSobrancelha(const string &sobrancelha);
     string getSobrancelha() const;
 
+    void setColor(string opcao, int color=0);
+    string getColor(string opcao) const;
+
     static void mostrarOpcoes(const string listaOpcoes[], const string & titulo);
     static void exibirMenuConfiguracoes(int opcao = -1);
-    void visualizarAppearance() const;
-
+    //operadores
+    const SimsAppearance &operator=(const SimsAppearance &);  // assign SimsAppearance
+    int operator==(const SimsAppearance &) const; // compare equal
+    int operator!=(const SimsAppearance &) const; // compare !equal
+    void operator!(); // "zera"/"esvazia" aparência;
 
   private:
 
-    string cabeca;
-    string olhos;
-    string nariz;
-    string boca;
-    string orelha;
-    string cabelo;
-    string sobrancelha;
-
+    caracteristicas config;
     // atributos estáticos
     static const int NUMAXCONFIGURACOES = 3;
     static const string LIST_CABECA[NUMAXCONFIGURACOES];
@@ -61,6 +80,9 @@ class SimsAppearance
     static const string LIST_ORELHA[NUMAXCONFIGURACOES];
     static const string LIST_CABELO[NUMAXCONFIGURACOES];
     static const string LIST_SOBRANCELHA[NUMAXCONFIGURACOES];
+
+    void limpaCaracteristica( string& caracteristica);
+
 };
 
 #endif // SIMSAPPEARANCE_H
