@@ -1,6 +1,5 @@
 <div align="center">
-  <img src ="https://private-user-images.githubusercontent.com/87232098/266798678-211f4171-52a9-4fa0-9809-10bb6a507d2e.png?jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTEiLCJleHAiOjE2OTQyODcxODYsIm5iZiI6MTY5NDI4Njg4NiwicGF0aCI6Ii84NzIzMjA5OC8yNjY3OTg2NzgtMjExZjQxNzEtNTJhOS00ZmEwLTk4MDktMTBiYjZhNTA3ZDJlLnBuZz9YLUFtei1BbGdvcml0aG09QVdTNC1ITUFDLVNIQTI1NiZYLUFtei1DcmVkZW50aWFsPUFLSUFJV05KWUFYNENTVkVINTNBJTJGMjAyMzA5MDklMkZ1cy1lYXN0LTElMkZzMyUyRmF3czRfcmVxdWVzdCZYLUFtei1EYXRlPTIwMjMwOTA5VDE5MTQ0NlomWC1BbXotRXhwaXJlcz0zMDAmWC1BbXotU2lnbmF0dXJlPTI4NTFhODEyYTJkZDVjODYzMTIxMTcxNTY0ZDhlNzU0OTdlYTBlNWIxMDIyNzQ3OWUxOTIzMmZkZTRmOGM0YTImWC1BbXotU2lnbmVkSGVhZGVycz1ob3N0JmFjdG9yX2lkPTAma2V5X2lkPTAmcmVwb19pZD0wIn0.fwGs9bGYxz7D8MMSk3WMKSpq0xuDApa5E0wmpAt_1gE" />
-
+  <img src ="https://github.com/syannekaroline/TheSimsMobile/assets/87232098/d815836e-9ecf-4669-ac4a-e3ff76b7b5c4" />
   <h1>TheSimsProject</h1>
   
   **The Sims aplicado no estudo de Programação Orientada a Objetos em c++**
@@ -29,7 +28,7 @@
 <h2><a name="diagramaclasses">📃 Diagrama de Classes</a></h2>
 <span><br/>
 <div align="center">
-<img src = "https://private-user-images.githubusercontent.com/87232098/266798867-52bee437-370c-4718-b580-65a9936def85.png?jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTEiLCJleHAiOjE2OTQyODczNDYsIm5iZiI6MTY5NDI4NzA0NiwicGF0aCI6Ii84NzIzMjA5OC8yNjY3OTg4NjctNTJiZWU0MzctMzcwYy00NzE4LWI1ODAtNjVhOTkzNmRlZjg1LnBuZz9YLUFtei1BbGdvcml0aG09QVdTNC1ITUFDLVNIQTI1NiZYLUFtei1DcmVkZW50aWFsPUFLSUFJV05KWUFYNENTVkVINTNBJTJGMjAyMzA5MDklMkZ1cy1lYXN0LTElMkZzMyUyRmF3czRfcmVxdWVzdCZYLUFtei1EYXRlPTIwMjMwOTA5VDE5MTcyNlomWC1BbXotRXhwaXJlcz0zMDAmWC1BbXotU2lnbmF0dXJlPTlkZWFjMTNlYTgzYzI3NDA0ODExOTY5ZTRhY2Y4NmMxMjhjOTNhNmUzMjQ1MGQ4YTVlZTg4OWM2OGIwYzBlOWYmWC1BbXotU2lnbmVkSGVhZGVycz1ob3N0JmFjdG9yX2lkPTAma2V5X2lkPTAmcmVwb19pZD0wIn0.WfZ3gego-7c0ezWTMYMVJG1cFMHnrORToMIM7rRSAJ0"/>
+<img src = ""/>
 
 </div>
 <h1></h1>
