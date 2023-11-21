@@ -83,3 +83,21 @@ bool loadConfig(map<string, long int>& variables, string nameFile )
     inputFile.close();
     return true;
 }
+
+void prosseguir() {
+    char resposta;
+    
+    cout << "\n\nDeseja prosseguir? (s/n): ";
+    cin >> resposta;
+
+    if (resposta == 's' || resposta == 'S') {
+        // Verificar se o sistema operacional é Windows ou Unix-like
+        #ifdef _WIN32
+            system("cls"); // Comando para limpar o terminal no Windows
+        #else
+            system("clear"); // Comando para limpar o terminal em sistemas Unix-like (Linux, macOS)
+        #endif
+    } else {
+        cout << "Operação cancelada pelo usuário.\n";
+    }
+}

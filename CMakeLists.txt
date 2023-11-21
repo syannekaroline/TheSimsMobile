@@ -8,11 +8,19 @@ set(SOURCES
     src/SimsAppearance.cpp
     src/SimsGame.cpp
     src/Data.cpp
-    src/infosGame.txt
+    src/Quests.cpp
+    src/DailyTasks.cpp
+    src/GeneralMissions.cpp
+    src/Stories.cpp
+    src/StoriesRelationship.cpp
+    src/FriendshipActions.cpp
+    src/RomanticActions.cpp
+    src/StoriesCareer.cpp
+    src/QuickShift.cpp
+    src/StandardShift.cpp
 
     # Adicione mais arquivos fonte se você tiver mais classes
 )
 
 add_executable(meuprograma ${SOURCES})
 target_include_directories(meuprograma PRIVATE include)
-

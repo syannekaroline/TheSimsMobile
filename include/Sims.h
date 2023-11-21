@@ -28,10 +28,14 @@ class Sims
         void setTonalidadeDaPele(int);
         void setEnergia(double);
         void setSimCash(double);
-        void setEndereco(string);        
+        void setEndereco(string);
+        void addXp(int);
+        void addSimCash(double);
+        void diminuirEnergia(int);
 
         string getNome() const;
         string getSobrenome() const;
+        inline string getNomeCompleto() const{ return nome + " " + sobrenome; };
         char getGenero() const;
         int getTonalidadeDaPele() const;
         double getEnergia() const;

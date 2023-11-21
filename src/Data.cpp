@@ -37,3 +37,22 @@ int Data::VerificaDia(int diaTeste) const
     cout << "Dia invalido (" << diaTeste << ") configurado para 1.\n";
     return 1;
 }
+
+Data Data::getDataAtual() {
+    time_t t = time(nullptr);
+    tm* now = localtime(&t);
+
+    int diaAtual = now->tm_mday;
+    int mesAtual = now->tm_mon + 1;  // tm_mon começa de 0
+    int anoAtual = now->tm_year + 1900;  // tm_year é o ano desde 1900
+
+    return Data(diaAtual, mesAtual, anoAtual);
+}
+
+bool Data::operator==(const Data& other) const {
+    return (dia == other.dia && mes == other.mes && ano == other.ano);
+}
+
+bool Data::operator!=(const Data& other) const {
+    return !(*this == other);
+}

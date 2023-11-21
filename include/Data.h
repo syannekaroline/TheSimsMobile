@@ -19,7 +19,10 @@ public:
     inline int getDia() const { return dia;};
     inline int getMes() const { return mes;};
     inline int getAno() const { return ano;};
-
+    bool operator==(const Data& other) const;
+    bool operator!=(const Data& other) const;
+    static Data getDataAtual();
+    
 private:
     
     int mes;

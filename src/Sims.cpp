@@ -552,3 +552,18 @@ bool Sims::operator!() const
 {
     return (experiencia == 0)? true : false;
 }
+
+void Sims::addXp(int xp){
+    this->experiencia+=xp;
+    return;
+}
+
+void Sims::addSimCash(double simCash){
+    this->simCash+=simCash;
+    return;
+}
+
+void Sims::diminuirEnergia(int energia){
+    this->energia-=energia;
+    return;
+}
