@@ -23,7 +23,7 @@ public:
     int getRecompensaCap(int index) const;
     void resetParte(){ parte = 1; };
 
-    Stories& operator=(const Stories& other);
+    const Stories& operator=(const Stories& other);
     bool operator==(const Stories& other) const;
     bool operator!=(const Stories& other) const;
     bool operator!() const;

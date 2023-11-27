@@ -31,7 +31,7 @@ public:
     void concluirMissao();
 
     // Operadores
-    Quests& operator=(const Quests& other);
+    const Quests& operator=(const Quests& other);
     bool operator==(const Quests& other) const;
     bool operator!=(const Quests& other) const;
     bool operator!() const;

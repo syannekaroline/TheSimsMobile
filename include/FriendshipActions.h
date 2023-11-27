@@ -1,7 +1,7 @@
 #ifndef FRIENDSHIP_ACTIONS_H
 #define FRIENDSHIP_ACTIONS_H
 #include <vector>
-#include "StoriesRelationship.h"
+#include "RelationshipStories.h"
 #include "Sims.h"
 using std::vector;
 
@@ -12,16 +12,16 @@ struct Action
     int pontosDeEvento;
 }; 
 
-class FriendshipActions : public StoriesRelationship {
+class FriendshipActions : public RelationshipStories {
     friend ostream& operator<<(ostream& out, const FriendshipActions& );
 
     public:
         FriendshipActions();
-        FriendshipActions(const StoriesRelationship&, const vector <Action> &);
+        FriendshipActions(const RelationshipStories&, const vector <Action> &);
         FriendshipActions(const FriendshipActions& other);
         ~FriendshipActions();
 
-        FriendshipActions& operator=(const FriendshipActions& other);
+        const FriendshipActions& operator=(const FriendshipActions& other);
         bool operator==(const FriendshipActions& other) const;
         bool operator!=(const FriendshipActions& other) const;
         bool operator!() const;
@@ -29,6 +29,7 @@ class FriendshipActions : public StoriesRelationship {
         void showActions()const ;
         void executeAction (Sims*,int);
         int getCurrentPontos() const { return currentPontos; };
+        vector<Action> getActions() const { return actions; };
 
     private:
 

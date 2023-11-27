@@ -33,7 +33,6 @@ const string SimsAppearance::LIST_SOBRANCELHA[NUMAXCONFIGURACOES] = {"Delicadame
 SimsAppearance::SimsAppearance()
 : config{LIST_CABECA[0], LIST_OLHOS[0], LIST_NARIZ[0], LIST_BOCA[0], LIST_ORELHA[0], LIST_CABELO[2], LIST_SOBRANCELHA[1]}
 {
-    cout << "Criando aparência do Sims com construtor padrão\n";
 }
 
 SimsAppearance::SimsAppearance(const string &cabeca, const string &olhos, const string &nariz, const string &boca,const string & orelha, const string &cabelo, const string &sobrancelha) 
@@ -45,19 +44,16 @@ SimsAppearance::SimsAppearance(const string &cabeca, const string &olhos, const 
     setOrelha(orelha);
     setCabelo(cabelo);
     setSobrancelha(sobrancelha);
-    cout << "Criando aparência do Sim...";
 }
 
 SimsAppearance::SimsAppearance(const SimsAppearance &other)
 :config{other.config}
 {
-    cout << "Criando aparência do Sim...";
 }
 
 // destrutor 
 SimsAppearance::~SimsAppearance()
 {
-    cout<<"Deletando objeto SimsAppearance\n";
 }
 
 // métodos set e get
@@ -270,7 +266,7 @@ ostream &operator<<(ostream &out, const SimsAppearance &sim)
 
 void SimsAppearance::setColor(string opcao,int color)
 {
-    config.color[opcao] = Sims::getColor(color);
+    config.color[opcao] = getColor(color); 
 }
 
 string SimsAppearance::getColor( string opcao) const
@@ -325,3 +321,35 @@ void SimsAppearance::operator!() // "zera"/"esvazia" aparência;
         limpaCaracteristica(item.second);
     }
 };
+
+
+string SimsAppearance::getColor(int color )
+{   
+    // Recebe um valor inteiro color e retorna a string correspondente ao emoji da cor.
+    
+    if ( color <= 1 || color<=9)
+    {  
+        switch (color) 
+        {
+            case 1:
+                return "🟥";
+            case 2:
+                return "🟧";
+            case 3:
+                return "🟨";
+            case 4:
+                return "🟩";
+            case 5:
+                return "🟦";
+            case 6:
+                return "🟪";
+            case 7:
+                return "🟫";
+            case 8:
+                return "⬛";
+            case 9:
+                return "⬜";
+        }
+    }
+    return "⬛";
+}

@@ -39,7 +39,6 @@ class SimsGame
         void printSimsList( ) const;
         void addSim( const Sims & );
         void deleteLastSim( );
-
         // operadores
         const SimsGame &operator=(const SimsGame &);  // assign SimsGame
         int operator==(const SimsGame &) const; // compare equal
@@ -52,6 +51,7 @@ class SimsGame
         const Data DATANASCIMENTO; //Dependendo do ano de nascimento escolhido, o estilo de jogo vai ser diferente dependendo da faixa etária: criança, adolescente, adulto ou idoso
         int estiloJogo;
         vector< Sims * > simsList;
+
 };
 
 #endif // SIMSGAME_H

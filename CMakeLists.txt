@@ -4,23 +4,28 @@ project(TheSimsProject)
 set(SOURCES
     src/main.cpp
     src/Sims.cpp
-    src/SimsHouse.cpp
-    src/SimsAppearance.cpp
     src/SimsGame.cpp
+    src/SimsAppearance.cpp
     src/Data.cpp
-    src/Quests.cpp
-    src/DailyTasks.cpp
-    src/GeneralMissions.cpp
-    src/Stories.cpp
-    src/StoriesRelationship.cpp
-    src/FriendshipActions.cpp
-    src/RomanticActions.cpp
-    src/StoriesCareer.cpp
-    src/QuickShift.cpp
-    src/StandardShift.cpp
+    src/hierarquiaQuests/Quests.cpp
+    src/hierarquiaQuests/DailyTasks.cpp
+    src/hierarquiaQuests/GeneralMissions.cpp
+    src/hierarquiaStories/Stories.cpp
+    src/hierarquiaStories/StoriesNivel2/RelationshipStories.cpp
+    src/hierarquiaStories/StoriesNivel2/CareerStories.cpp
 
+    src/hierarquiaStories/RelationshipsStories/FriendshipActions.cpp
+    src/hierarquiaStories/RelationshipsStories/RomanticActions.cpp
+
+    src/hierarquiaLocation/Location.cpp
+    src/hierarquiaLocation/Building.cpp
+    src/hierarquiaLocation/Workplace.cpp
+    src/hierarquiaLocation/LeisurePlace.cpp
+    src/hierarquiaLocation/SimsHouse.cpp
+    src/infosGame.txt
     # Adicione mais arquivos fonte se você tiver mais classes
 )
 
 add_executable(meuprograma ${SOURCES})
+
 target_include_directories(meuprograma PRIVATE include)

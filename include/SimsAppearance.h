@@ -67,7 +67,7 @@ class SimsAppearance
     int operator==(const SimsAppearance &) const; // compare equal
     int operator!=(const SimsAppearance &) const; // compare !equal
     void operator!(); // "zera"/"esvazia" aparência;
-
+    string getColor(int color );
   private:
 
     caracteristicas config;

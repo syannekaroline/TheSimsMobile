@@ -23,7 +23,7 @@ public:
     void showEndsIn() const;
     bool hasExpired() const;
     // Operadores
-    DailyTasks& operator=(const DailyTasks& other);
+    const DailyTasks& operator=(const DailyTasks& other);
     bool operator==(const DailyTasks& other) const;
     bool operator!=(const DailyTasks& other) const;
     bool operator!() const;

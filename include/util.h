@@ -31,7 +31,7 @@ bool createInfos(string nameFile )
     int mes;
     int ano;
 
-    std::cout << "Para jogar, insira sua data de nascimento (dia mês ano): ";
+    cout << "Para jogar, insira sua data de nascimento (dia mês ano): ";
     if (!(cin >> dia >> mes >> ano)) {
         cerr << "entrada inválida!" << '\n';
         return false; // Exit with an error code
@@ -47,16 +47,16 @@ bool createInfos(string nameFile )
     outputFile << "id = " << SimsGame::gerarIdAleatorio() << '\n';
     outputFile << "dia = " << dia << '\n';
     outputFile << "mes = " << mes << '\n';
-    outputFile << "ano = " << ano << '\n';
+    outputFile << "ano = " << ano << '\n';  
 
     outputFile.close();
     cout << "Dados salvos com sucesso!" << '\n';
     return true;
 }
 
-bool loadConfig(map<string, long int>& variables, string nameFile )
+bool loadConfig(map<string, long int>& variables,string nameFile )
 {
-    //verifica se o arquivo tá vazio e escreve -> qualuqer erro retorna false,se escreveu corretamente retorna true
+    //verifica se o arquivo tá vazio e escreve -> qualquer erro retorna false,se escreveu corretamente retorna true
     if (!createInfos(nameFile))
         return false;
 
@@ -86,18 +86,17 @@ bool loadConfig(map<string, long int>& variables, string nameFile )
 
 void prosseguir() {
     char resposta;
-    
-    cout << "\n\nDeseja prosseguir? (s/n): ";
+    cout << "\n\n Digite s pra limpar o terminal: ";
     cin >> resposta;
 
     if (resposta == 's' || resposta == 'S') {
-        // Verificar se o sistema operacional é Windows ou Unix-like
-        #ifdef _WIN32
-            system("cls"); // Comando para limpar o terminal no Windows
-        #else
-            system("clear"); // Comando para limpar o terminal em sistemas Unix-like (Linux, macOS)
-        #endif
+    // Verificar se o sistema operacional é Windows ou Unix-like
+    #ifdef _WIN32
+        system("cls"); // Comando para limpar o terminal no Windows
+    #else
+        system("clear"); // Comando para limpar o terminal em sistemas Unix-like (Linux, macOS)
+    #endif
     } else {
         cout << "Operação cancelada pelo usuário.\n";
-    }
+    } 
 }

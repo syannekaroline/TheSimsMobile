@@ -54,7 +54,6 @@ class Sims
         void verAparencia() const;
         //operadores
         const Sims &operator=(const Sims &); //assign Sims
-        const Sims &operator=(const SimsAppearance &); //Sims recebe uma aparência
         bool operator==(const Sims &) const; //compare equal
         int operator!=(const Sims &) const; //compare !equal
         bool operator!() const; //verifica se o sims não está ativo no jogo

@@ -1,6 +1,5 @@
 #include <iostream>
 #include "Sims.h"
-#include "SimsHouse.h"
 #include "SimsAppearance.h"
 #include "SimsGame.h"
 // hierarquia 1 
@@ -10,16 +9,19 @@
 // hierarquia 2
 #include "Stories.h" // nível 1
 
-#include "StoriesRelationship.h" //nivel 2
+#include "RelationshipStories.h" //nivel 2
 
 #include "FriendshipActions.h" //nivel 2 -> nivel 3
 #include "RomanticActions.h" //nivel 2 -> nivel 3
 
-#include "StoriesCareer.h" //nivel 2
+#include "CareerStories.h" //nivel 2
 
-#include "StandardShift.h" //nivel 2 -> nivel 3
-#include "QuickShift.h" //nivel 2 -> nivel 3
-
+//hierarquia 3
+#include "Location.h"
+#include "Building.h"
+#include "Workplace.h"
+#include "LeisurePlace.h"
+#include "SimsHouse.h"
 
 #include "util.h"
 #include <string>
@@ -41,6 +43,11 @@ using std::cerr;
 #include <map>
 using std::map;
 
+// #ifdef _unix_
+// #include <unistd.h>
+// #ifdef _WIN32
+// #include <windows.h>
+
 const string VERDECOLOR = "\033[1;32m";  // VERDE
 const string RESET = "\033[0m";  // Reset para a cor padrão
 enum aparencia{CABECA, OLHOS,NARIZ,BOCA,ORELHA,CABELO,SOBRANCELHA};
@@ -49,43 +56,44 @@ enum cores{VERMELHO=1,LARANJA,AMARELO,VERDE,AZUL,ROXO,MARROM,PRETO,BRANCO};
 int main()
 {
 
-//   map<string, long int> infosGame;
+  map<string, long int> infosGame;
 
-//   if(!loadConfig(infosGame, "build/infosGame.txt" ))
-//     return 0;
+  if(!loadConfig(infosGame, "infosGame.txt"))
+    return 0;
 
-//   cout <<VERDECOLOR;
-//   cout<< R"(
-//                                                                  ,-,-.
-//                                                        _(    _)
-//                                                       (__,`-'
-//                                             ,'`.   .-----,
-//                              __           ,','`.`.  |   |
-//                   _____    ,'  `.       ,','    `.`.|---|
-//               _,-'     \  /      \    ,',' _____  `.`.  |
-//            ,-'          \ \      /  ,','  |  |  |   `.`.|
-//          ,'           ___\ `.__.' ,','__  |--|--|   __'.`.         _
-//         /         _,-'     .----. \|    \ |__|__|  /    |/      ,-' \ TM
-//        |        ,'         |    |  |     \        /     |    ,-'    _\
-//        |        |          |    |  |      \      /      |  ,'    ,-'
-//         \       \          |    |  |       \    /       | /     /
-//          \       \         |    |  |        \  /        | |    ( 
-//           \       `.       |    |  |         \/         |  \    \
-//  ____ _    `.       `.     |    |  |    \          /    |   `.   `.
-// '-..-'||     `.       `.   |    |  |    |\        /|    |     `.   `.
-//   ||  ||__   __`.       \  |    |  |    | \      / |    |       \    \
-//   ||  |.-.\ /__\ \       \ |    |  |    |  \    /  |    |      ,'    /
-//   ||  || || \__, /       | |    |  |    |   \__/   |    | __,-'    ,'
-//                ,'        / |    |  |    |          |    | \     ,-'
-//         ____,-'        ,'  |____|  |    |          |    |  \_,-'
-//         \            ,'            |____|          |____|
-//          \       _,-'
-//           \___,-'
+  cout <<VERDECOLOR;
+  cout<< R"(
+                                                                 ,-,-.
+                                                       _(    _)
+                                                      (__,`-'
+                                            ,'`.   .-----,
+                             __           ,','`.`.  |   |
+                  _____    ,'  `.       ,','    `.`.|---|
+              _,-'     \  /      \    ,',' _____  `.`.  |
+           ,-'          \ \      /  ,','  |  |  |   `.`.|
+         ,'           ___\ `.__.' ,','__  |--|--|   __'.`.         _
+        /         _,-'     .----. \|    \ |__|__|  /    |/      ,-' \ TM
+       |        ,'         |    |  |     \        /     |    ,-'    _\
+       |        |          |    |  |      \      /      |  ,'    ,-'
+        \       \          |    |  |       \    /       | /     /
+         \       \         |    |  |        \  /        | |    ( 
+          \       `.       |    |  |         \/         |  \    \
+ ____ _    `.       `.     |    |  |    \          /    |   `.   `.
+'-..-'||     `.       `.   |    |  |    |\        /|    |     `.   `.
+  ||  ||__   __`.       \  |    |  |    | \      / |    |       \    \
+  ||  |.-.\ /__\ \       \ |    |  |    |  \    /  |    |      ,'    /
+  ||  || || \__, /       | |    |  |    |   \__/   |    | __,-'    ,'
+               ,'        / |    |  |    |          |    | \     ,-'
+        ____,-'        ,'  |____|  |    |          |    |  \_,-'
+        \            ,'            |____|          |____|
+         \       _,-'
+          \___,-'
 
-//        )"<< RESET<<"\n";
+       )"<< RESET<<"\n";
 
-//   SimsGame *gamePtr= new SimsGame(22,10,2010);
-//   SimsGame game(infosGame);
+  SimsGame *gamePtr= new SimsGame(22,10,2010);
+  SimsGame game(infosGame);
+
 //   cout<<"\n-=-=-=-= Usando sobrecarga de operadores da classe SimsGame-=-=-=-=\n";
 
 //   if (*gamePtr!=game) // operador diferença
@@ -104,9 +112,9 @@ int main()
   cout << "Sim com atributos personalizados.\n";
   Sims meuSim("Syanne", "Karoline",  'F' , 7, 30 ,225000);
 
-//   //criando ponteiros pra manipular objeto
-//   Sims *meuSimPtr = &meuSim;
-//   meuSimPtr->descansar();
+  // //criando ponteiros pra manipular objeto
+  // Sims *meuSimPtr = &meuSim;
+  // meuSimPtr->descansar();
 //   cout << "Usando metodo get para obter nova energia com ponteiro: " << meuSimPtr->getEnergia() << "\n";
 
 //   //Utilizando parâmetro default do construtor mostrando a limitação de string
@@ -190,18 +198,19 @@ int main()
 //   sleep (3);  // Pausa de 3 segundo
 //   cout<<"Realizando composição entre classe Sims e classe SimGame e usando sobrecarga de operadores\n";
 
-//   if(!game)//verifica se não há sims ativos no jogo
-//     game.addSim(meuSim);
-//   *gamePtr = game; //copia lista de sims
-//   cout<<game;
-//   cout<<*gamePtr;
+  // if(!game)//verifica se não há sims ativos no jogo
+  //   game.addSim(meuSim);
+  // *gamePtr = game; //copia lista de sims
+  // cout<<game;
+  // cout<<*gamePtr;
 //   if(game==game)
 //     cout<<"mesmo jogo\n";
 //   if(game!=*gamePtr)
 //     cout<<"jogos diferentes\n";
 
-//   sleep (3);  // Pausa de 3 segundo
-//   gamePtr->printSimsList();
+  // cout<<"Mostrar lista de Sims";
+  // prosseguir();
+  // gamePtr->printSimsList();
 //   gamePtr->deleteLastSim();
 //   gamePtr->printSimsList();
 //   cout<<"< Deletando objeto gamePtr pois não será mais utilizado > \n";
@@ -298,107 +307,142 @@ int main()
   //   delete casa;
   // }
 
-  // /////////////////// Hierarquia 1
-  // const int NUMMAXMISSION = 2;
-  // Quests  *quests[NUMMAXMISSION];
-  // DailyTasks *dailyTasks[NUMMAXMISSION];
-  // GeneralMissions *generalMission[NUMMAXMISSION];
+  /////////////////// Hierarquia 1
 
-  // quests[ 0 ] = new Quests;
-  // cout << *quests[ 0 ];
+  cout<<"Missões sims";
+  prosseguir();
+  const int NUMMAXMISSION = 2;
+  Quests  *quests[NUMMAXMISSION];
+  DailyTasks *dailyTasks[NUMMAXMISSION];
+  GeneralMissions *generalMission[NUMMAXMISSION];
 
-  // quests[ 1 ] =  new Quests("Conhecer um novo Sim", "🗣️", 10);
-  // cout << *quests[ 1 ];
+  quests[ 0 ] = new Quests;
+  cout << *quests[ 0 ];
 
-  // dailyTasks[ 0 ] = new DailyTasks;
-  // cout << *dailyTasks[ 0 ];
+  quests[ 1 ] =  new Quests("Conhecer um novo Sim", "🗣️", 10);
+  cout << *quests[ 1 ];
 
-  // dailyTasks[ 1 ] = new DailyTasks("Use 100 de energia de um sim", "⚡",250);
-  // cout << *dailyTasks[ 1 ];
+  dailyTasks[ 0 ] = new DailyTasks;
+  cout << *dailyTasks[ 0 ];
 
-  // generalMission[ 0 ] = new GeneralMissions;
-  // cout << *generalMission[ 0 ];
+  dailyTasks[ 1 ] = new DailyTasks("Use 100 de energia de um sim", "⚡",250);
+  cout << *dailyTasks[ 1 ];
 
-  // generalMission[ 1 ] = new GeneralMissions("Grande Final", "🗣️", 25,"Parece que esse relacionamento está apenas começando. Vamos concluir o próximo capítulo.", "Conclua um capítulo de uma história de relacionamento.");
-  // cout << *generalMission[ 1 ];
+  generalMission[ 0 ] = new GeneralMissions;
+  cout << *generalMission[ 0 ];
+
+  generalMission[ 1 ] = new GeneralMissions("Grande Final", "🗣️", 25,"Parece que esse relacionamento está apenas começando. Vamos concluir o próximo capítulo.", "Conclua um capítulo de uma história de relacionamento.");
+  cout << *generalMission[ 1 ];
+
+  for(int i = 0; i < NUMMAXMISSION; i++){
+    generalMission[ i ]->completed();
+    prosseguir();
+  }
   
-  // //recompensa por capítulo
-  // // storyMission[ 1 ] = new GeneralMissions("Trilha Sonora da Alma", "Dois amigos se unem por amor à musica", 50,capitulos);
-  // // storyMission[ 1 ]->iniciarEvento();
-  // // cout << *storyMission[ 1 ];
+  for(int i = 0; i < NUMMAXMISSION; i++)
+  {
+    delete quests[ i ];
+    delete dailyTasks[ i ];
+    delete generalMission[ i ];
+  }
 
-  // for(int i = 0; i < NUMMAXMISSION; i++)
-  // {
-  //   delete quests[ i ];
-  //   delete dailyTasks[ i ];
-  //   delete generalMission[ i ];
-  // }
+  // hierarquia 2
+  cout<<"\n\n+ Sims Histórias - Relacionamentos  -------------------------+\n";
+  map<int,string> capitulosAmizade = {{10, "Amizade Musical"}, {20, "Entusiastas do Vinil"}, {30, "Apreciadores Acusticos"},{40,"Combo do coral"}};
+  //nívei 1 e 2.1
+  cout<<"\n+ Amizades  -------------------------+\n";
+  RelationshipStories Amizade("Trilha Sonora da Alma", "Uma história de Amizade","Dois amigos se unem pelo amor à musica",capitulosAmizade,meuSim.getNome());
 
-  // //hierarquia 2
-  // cout<<"\n\n+ Sims Histórias - Relacionamentos  -------------------------+\n";
-  // map<int,string> capitulosAmizade = {{10, "Amizade Musical"}, {20, "Entusiastas do Vinil"}, {30, "Apreciadores Acusticos"},{40,"Combo do coral"}};
-  // //nívei 1 e 2.1
-  // cout<<"\n+ Amizades  -------------------------+\n";
-  // StoriesRelationship Amizade("Trilha Sonora da Alma", "Uma história de Amizade","Dois amigos se unem pelo amor à musica",capitulosAmizade,meuSim.getNome());
+  vector <Action>actionsAmizade;
+  actionsAmizade.push_back({"Dividir fone de ouvido", 1, 2});
+  actionsAmizade.push_back({"Empolgar-se com playlist", 2, 2});
+  actionsAmizade.push_back({"Examinar músicas Apocalípticas", 3, 3});
+  actionsAmizade.push_back({"Brindar à Amizade", 2, 3});
 
-  // vector <Action>actionsAmizade;
-  // actionsAmizade.push_back({"Dividir fone de ouvido", 1, 2});
-  // actionsAmizade.push_back({"Empolgar-se com playlist", 2, 2});
-  // actionsAmizade.push_back({"Examinar músicas Apocalípticas", 3, 3});
-  // actionsAmizade.push_back({"Brindar à Amizade", 2, 3});
-
-  // //nivel 3.1
-  // FriendshipActions actionsAmizadeMusical(Amizade, actionsAmizade);
-  // actionsAmizadeMusical.showActions();
-  // cout<<actionsAmizadeMusical;
-  // for (int i = 1; i <= actionsAmizade.size();i++){
-  //   actionsAmizadeMusical.executeAction(&meuSim,i);
-  // }
+  //nivel 3.1
+  FriendshipActions actionsAmizadeMusical(Amizade, actionsAmizade);
+  actionsAmizadeMusical.showActions();
+  cout<<actionsAmizadeMusical;
+  for (int i = 1; i <= actionsAmizade.size();i++){
+    actionsAmizadeMusical.executeAction(&meuSim,i);
+    prosseguir();
+  }
   
-  // cout<<actionsAmizadeMusical;
-  // cout<<meuSim;
+  cout<<actionsAmizadeMusical;
+  cout<<meuSim;
 
-  // prosseguir();
-  // //nívei 1 e 2.1
-  // cout<<"\n\n+ Sims Histórias - Relacionamentos  -------------------------+\n";
-  // cout<<"\n+ Româticas  -------------------------+\n";
-  // map<int,string> capitulosRomanticos = {{10, "Admirador não tão secreto"}, {20, "Espíritos semelhantes"}, {30, "Desejo do coração"},{40,"Amor Verdadeiro"},{50,"Almas Gêmeas"}};
-  // StoriesRelationship HistoriaRomantica("Almas Gêmeas", "Uma história de Romance","Certos amores são coisas do destino",capitulosRomanticos,meuSim.getNome());
+  prosseguir();
+  //nívei 1 e 2.1
+  cout<<"\n\n+ Sims Histórias - Relacionamentos  -------------------------+\n";
+  cout<<"\n+ Româticas  -------------------------+\n";
+  map<int,string> capitulosRomanticos = {{10, "Admirador não tão secreto"}, {20, "Espíritos semelhantes"}, {30, "Desejo do coração"},{40,"Amor Verdadeiro"},{50,"Almas Gêmeas"}};
+  RelationshipStories HistoriaRomantica("Almas Gêmeas", "Uma história de Romance","Certos amores são coisas do destino",capitulosRomanticos,meuSim.getNomeCompleto());
 
-  // Sims brunoMars("Bruno", "Mars",  'F' , 7, 30 ,225000);
-  // RomanticActions actionsAlmasGemeas(HistoriaRomantica,brunoMars.getNomeCompleto());
+  Sims brunoMars("Bruno", "Mars",  'F' , 7, 30 ,225000);
+  RomanticActions actionsAlmasGemeas(HistoriaRomantica,brunoMars.getNomeCompleto());
 
-  // actionsAlmasGemeas.startEvent(&brunoMars);
+  cout<<actionsAlmasGemeas;
+  actionsAlmasGemeas.startEvent(&brunoMars);
 
-  // prosseguir();
-  // cout<<"\n\n+ Sims Histórias - Relacionamentos  -------------------------+\n";
-  // cout<<"\n+ Româticas  -------------------------+\n";
-  // cout<<actionsAlmasGemeas;
+  prosseguir();
+  cout<<"\n\n+ Sims Histórias - Relacionamentos  -------------------------+\n";
+  cout<<"\n+ Româticas  -------------------------+\n";
+  cout<<actionsAlmasGemeas;
 
   // prosseguir();
   cout<<"\n\n+ Sims Histórias - Carreira  -------------------------+\n";
 
   map<int,string> capitulosHistoriaBarista = {{10, "Passador de café"}, {20, "Aprendiz de barista"}, {30, "Artista de café com leito"},{40,"Mestre do macchiato"},{50,"Barista Real"}};
-  StoriesCareer barista("O Caminho do Café com Leite", "Uma história de barista","Um novato dos cafés descobre que ser barista é duro de moer.",capitulosHistoriaBarista, meuSim.getNome(),"Cafeteria the Sims");
+  vector <string> acoesBarista{{"Dar café com leite ao cliente"},{"Discutir melhores combinações de grãos"},{"Preparar um café"},{"Limpar botões grudentos"}};
 
-  vector <string> acoesBarista{{"Dar café com leite ao cliente"},{"Discutor melhores combinações de grãos"},{"Preparar um café"},{"Limpar botões grudentos"}};
-  QuickShift turnoRapido(barista,acoesBarista);
-  StandardShift turnoNormal(barista,acoesBarista);
+  CareerStories barista("O Caminho do Café com Leite", "Uma história de barista","Um novato dos cafés descobre que ser barista é duro de moer.",capitulosHistoriaBarista, meuSim.getNome(),"Cafeteria the Sims",acoesBarista);
 
   cout<<barista;
   prosseguir();
 
   cout<<"\nTurno rápido - iniciar evento?";
   prosseguir();
-  turnoRapido.iniciarEvento(&meuSim);
+  barista.iniciarEvento(&meuSim,QUICKSHIFT);
 
   cout<<"\nTurno normal - iniciar evento?";
   prosseguir();
-  turnoNormal.iniciarEvento(&meuSim);
-  turnoNormal.iniciarEvento(&meuSim);
+  barista.iniciarEvento(&meuSim,STANDARDSHIFT);
 
   cout<<"Mostrar história barista - \n";
   prosseguir();
-  cout<<turnoNormal;
+  cout<<barista;
+
+  //hierarquia 3 - três níveis
+  map<int,string> capitulosHistoriaMedico = {{10, "Médico em missão"}, {20, "Pesquisador Racional"}, {30, "Detetive dos diagnósticos"},{40,"Médico Dedicado"},{50,"Doutor Destemido"}};
+  vector <string> acoesMedico{{"Perguntar sobre o histórico médico"},{"Tirar temperatra do paciente"},{"Verificar sinais vitais do paciente"},{"Explicar diagnóstico"}};
+
+  CareerStories medico("A cura misteriosa", "Uma história médica","Um médico descobre um segredo chocante durante uma epidemia.",capitulosHistoriaMedico, meuSim.getNome(),"Hospital Sims",acoesMedico);
+  Workplace hospital(make_tuple(80,80),medico,"ennays","Praça do mercado","Sims hospital");
+
+  cout<<"Mostrar história Médico - \n";
+  prosseguir();
+  cout<<hospital;
+  cout<<"Escolher modelo do prédio - \n";
+  prosseguir();
+  hospital.chooseBuildingModel();
+  cout<<"Mostrar planta baixa - \n";
+  prosseguir();
+  hospital.displayFloorPlan();
+
+  hospital.goToWork(&meuSim);
+  hospital.goToWork(&meuSim);
+
+  cout<<hospital;
+
+  cout<<"Lugares de lazer - \n";
+  prosseguir();
+
+  LeisurePlace jardimBotanico(make_tuple(40,40), "Jardim botânico","The sims Jardim botânico", actionsAmizadeMusical, actionsAlmasGemeas);
+
+  jardimBotanico.socialize(&meuSim);
+
+  cout<<jardimBotanico.getFriendshipActions();
+
   return 0;
 }
+// #endif

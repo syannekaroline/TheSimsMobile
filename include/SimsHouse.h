@@ -12,6 +12,7 @@ using std::ostream;
 
 #include <vector>
 using std::vector;
+#include "Location.h"
 
 struct features
 {
@@ -21,7 +22,7 @@ struct features
   string estilo;
 };
 
-class SimsHouse 
+class SimsHouse : public Location
 {
   
   friend ostream &operator<<(ostream &, const SimsHouse &);
@@ -34,15 +35,12 @@ class SimsHouse
     ~SimsHouse();//Destrutor -> relacionado a desalocaçao de memória 
 
     // declarando get e set -> acesso seguro na alteração dos atributos
-    void setProporcaoTerreno(const tuple<int,int> & );
     void setValor(double);
-    void setProprietario(string);
     
     string getEndereco() const;
     tuple<int,int> getProporcaoTerreno() const;
     bool isPremium() const;
     double getValor() const;
-    string getProprietario() const;
 
     //Demais métodos 
     void efetuarVenda(Sims &);
@@ -65,10 +63,8 @@ class SimsHouse
 
   private:
 
-    tuple<int,int> proporcaoTerreno;
     bool premium;
     double valor; // em simCash
-    string proprietario;
     features housefeatures;
 
     const string ENDERECO;

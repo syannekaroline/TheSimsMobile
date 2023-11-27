@@ -13,7 +13,6 @@ using std::cout;
 Sims::Sims()
 : nome("Fulana"), sobrenome("da Silva"), genero('F'),tonalidadeDaPele(7),energia(20),simCash(300),endereco(""),experiencia(0),conquistasPtr(0),conquistasSize(0),contatosPtr(0),contatosSize(0),aparencia()
 {
-    cout << "Inicializando Sim.\n";
 }
 
 // Construtor com com parâmetros -> permite a personalização dos atributos
@@ -29,7 +28,6 @@ Sims::Sims(string nome, string sobrenome, char genero, int tonalidadeDaPele,doub
     contatosPtr=0;
     experiencia = 0;
 
-    cout << "Inicializando Sim.\n";
     setNome(nome);
     setSobrenome(sobrenome);
     setGenero(genero);
@@ -42,8 +40,6 @@ Sims::Sims(string nome, string sobrenome, char genero, int tonalidadeDaPele,doub
 Sims::Sims(const Sims & simCopia)
 :aparencia(simCopia.aparencia)
 {
-    cout << "Inicializando Sim.\n";
-
     this->nome = simCopia.nome;
     this->sobrenome = simCopia.sobrenome;
     this->genero = simCopia.genero;
@@ -73,7 +69,6 @@ Sims::Sims(const Sims & simCopia)
 //Destrutor
 Sims::~Sims( )
 {  
-    cout<<"\nSim "<<nome<<" "<< sobrenome<< " foi excluído\n";
     delete [] conquistasPtr;
     delete [] contatosPtr;
 }
@@ -500,12 +495,6 @@ const Sims &Sims::operator=(const Sims &other)
     return *this;
 }
 
-// Operador de atribuição de aparência
-const Sims &Sims::operator=(const SimsAppearance &aparenciaNova) {
-    if (&aparencia != &aparenciaNova) // Verifica se não estamos atribuindo a si mesmo
-        aparencia = aparenciaNova;
-    return *this;
-}
 // Operador de comparação igual (compare equal)
 bool Sims::operator==(const Sims &other) const 
 {
