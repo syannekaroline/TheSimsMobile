@@ -25,10 +25,9 @@ class LeisurePlace : public Building
         vector<Sims> getSimsList() const;
         void setFriendshipActions(const FriendshipActions& );
         void setRomanticActions(const RomanticActions&);
-        FriendshipActions getFriendshipActions() const{return friendshipActions;};
         // Método específico
         void socialize(Sims*);
-
+        
         // Operadores
         const LeisurePlace &operator=(const LeisurePlace &);
         bool operator==(const LeisurePlace &) const;

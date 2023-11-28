@@ -279,7 +279,7 @@ Sem o diagrama UML, a saída do programa e o vídeo, o trabalho não será avali
 
         public:
             FriendshipActions();
-            FriendshipActions(const StoriesRelationship&, const vector <Action> &);
+            FriendshipActions(const RelationshipStories&, const vector <Action> &);
             FriendshipActions(const FriendshipActions& other);
             ~FriendshipActions();
 
@@ -291,7 +291,7 @@ Sem o diagrama UML, a saída do programa e o vídeo, o trabalho não será avali
             void showActions()const ;
             void executeAction (Sims*,int);
             int getCurrentPontos() const { return currentPontos; };
-            vector<Action> getActions() const { return actions; };
+            inline int getTamSimsList() const { return actions.size(); } ;
 
         private:
 
@@ -1736,6 +1736,7 @@ Sem o diagrama UML, a saída do programa e o vídeo, o trabalho não será avali
       Sem o diagrama UML, a saída do programa e o vídeo, o trabalho não será avaliado.*/
 
     //Link arquivo de configuração no repositório
-
+        // https://github.com/syannekaroline/TheSimsMobile/blob/main/build/infosGame.txt
     //Link vídeo mostrando a execução do código usando o arquivo de configuração
-    
+
+        // https://youtu.be/NrsGuFa4kP8

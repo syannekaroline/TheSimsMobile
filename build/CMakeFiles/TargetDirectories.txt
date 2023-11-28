@@ -1,3 +1,0 @@
-/home/syannetavares/Documentos/TheSimsMobile/build/CMakeFiles/meuprograma.dir
-/home/syannetavares/Documentos/TheSimsMobile/build/CMakeFiles/edit_cache.dir
-/home/syannetavares/Documentos/TheSimsMobile/build/CMakeFiles/rebuild_cache.dir

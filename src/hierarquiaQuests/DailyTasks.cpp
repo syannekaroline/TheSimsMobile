@@ -26,7 +26,7 @@ DailyTasks::DailyTasks(const string& nome, const string& icon, int recompensa)
 }
 
 DailyTasks::DailyTasks(const DailyTasks& other) 
-:Quests(other), endsIn(other.endsIn) 
+:Quests(static_cast<Quests>(other)), endsIn(other.endsIn) 
 {
 }
 DailyTasks::~DailyTasks()

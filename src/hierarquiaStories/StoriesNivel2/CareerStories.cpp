@@ -1,4 +1,5 @@
 #include "CareerStories.h"
+#include <climits>
 using std::cin;
 const string RESET = "\033[0m";
 const string VERDE = "\033[1;32m";  // Texto verde brilhante
@@ -58,6 +59,17 @@ void CareerStories::iniciarEvento(Sims* sim, const eventType& type) {
         int choice;
         cout << "Insira a ação que deseja executar:";
         cin >> choice;
+
+        // Verificar se a entrada é um número
+        if (cin.fail()) {
+            cin.clear(); // Limpar o sinal de falha
+            cin.ignore(INT_MAX, '\n'); // Descartar a entrada inválida
+            cout << VERMELHO << "Entrada inválida. Insira um número. Tente novamente.\n" << RESET;
+            continue; // Pular para a próxima iteração do loop
+        }
+
+        // Restaurar o buffer do teclado no caso de uma entrada válida
+        cin.ignore(INT_MAX, '\n');
 
         if (choice == -1) {
             cout << "Evento interrompido\n";

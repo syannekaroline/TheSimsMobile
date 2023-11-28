@@ -25,7 +25,7 @@ FriendshipActions::FriendshipActions(const RelationshipStories& relationshipStor
 }
 
 FriendshipActions::FriendshipActions(const FriendshipActions& other)
-: RelationshipStories(static_cast< FriendshipActions >( other )), MAXPONTOSEVENTOS(other.MAXPONTOSEVENTOS), currentPontos(other.currentPontos), actions(other.actions) {}
+: RelationshipStories(static_cast< RelationshipStories >( other )), MAXPONTOSEVENTOS(other.MAXPONTOSEVENTOS), currentPontos(other.currentPontos), actions(other.actions) {}
 
 FriendshipActions::~FriendshipActions() {}
 

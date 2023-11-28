@@ -309,13 +309,13 @@ int main()
 
   /////////////////// Hierarquia 1
 
-  cout<<"Missões sims";
   prosseguir();
   const int NUMMAXMISSION = 2;
   Quests  *quests[NUMMAXMISSION];
   DailyTasks *dailyTasks[NUMMAXMISSION];
   GeneralMissions *generalMission[NUMMAXMISSION];
 
+  cout<<" MISSÕES \n";
   quests[ 0 ] = new Quests;
   cout << *quests[ 0 ];
 
@@ -426,9 +426,10 @@ int main()
   prosseguir();
   hospital.chooseBuildingModel();
   cout<<"Mostrar planta baixa - \n";
-  prosseguir();
-  hospital.displayFloorPlan();
 
+  hospital.displayFloorPlan();
+  cout<<" goToWork - \n";
+  prosseguir();
   hospital.goToWork(&meuSim);
   hospital.goToWork(&meuSim);
 
@@ -440,8 +441,6 @@ int main()
   LeisurePlace jardimBotanico(make_tuple(40,40), "Jardim botânico","The sims Jardim botânico", actionsAmizadeMusical, actionsAlmasGemeas);
 
   jardimBotanico.socialize(&meuSim);
-
-  cout<<jardimBotanico.getFriendshipActions();
 
   return 0;
 }

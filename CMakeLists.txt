@@ -22,7 +22,6 @@ set(SOURCES
     src/hierarquiaLocation/Workplace.cpp
     src/hierarquiaLocation/LeisurePlace.cpp
     src/hierarquiaLocation/SimsHouse.cpp
-    src/infosGame.txt
     # Adicione mais arquivos fonte se você tiver mais classes
 )
 

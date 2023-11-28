@@ -1,6 +1,7 @@
 // RomanticActions.cpp
 #include "RomanticActions.h"
 #include <iostream>
+#include <climits>
 using std::cin;
 const string RESET = "\033[0m";
 const string VERDE = "\033[1;32m";  // Texto verde brilhante
@@ -32,7 +33,7 @@ RomanticActions::RomanticActions(const string& titulo, const string& subtitulo, 
 
 // Construtor de cópia
 RomanticActions::RomanticActions(const RomanticActions& other)
-: RelationshipStories(other), pair(other.pair), relationshipStatus(other.relationshipStatus), UPCAP(other.UPCAP) {}
+: RelationshipStories(static_cast< RelationshipStories >(other)), pair(other.pair), relationshipStatus(other.relationshipStatus), UPCAP(other.UPCAP) {}
 
 // Destrutor
 RomanticActions::~RomanticActions() {}
@@ -86,6 +87,17 @@ void RomanticActions::startEvent(Sims* sim) {
         cout << "Insira a ação que deseja executar:";
         cin >> choice;
 
+        // Verificar se a entrada é um número
+        if (cin.fail()) {
+            cin.clear(); // Limpar o sinal de falha
+            cin.ignore(INT_MAX, '\n'); // Descartar a entrada inválida
+            cout << VERMELHO << "Entrada inválida. Insira um número. Tente novamente.\n" << RESET;
+            continue; // Pular para a próxima iteração do loop
+        }
+
+        // Restaurar o buffer do teclado no caso de uma entrada válida
+        cin.ignore(INT_MAX, '\n');
+
         if (choice == -1) {
             break; // Finalizar o evento
         }
@@ -119,6 +131,7 @@ void RomanticActions::startEvent(Sims* sim) {
                 break;
             default:
                 cout <<VERMELHO<< "Escolha inválida. Tente novamente.\n";
+                break;
         }
         cout<<RESET;
         cout<<"\nPontos de evento:  ⭐ "<<points<<"\n";

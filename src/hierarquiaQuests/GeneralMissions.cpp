@@ -20,7 +20,7 @@ GeneralMissions::GeneralMissions(const string& nome, const string& icon, int rec
 }
 
 GeneralMissions::GeneralMissions(const GeneralMissions& other)
-: Quests(other),
+: Quests(static_cast<Quests>(other)),
     description(other.description),
     subtitle(other.subtitle)
 {}

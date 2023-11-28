@@ -98,7 +98,7 @@ void LeisurePlace::socialize(Sims *sim)
         sim->fazerApresentacaoAgradavel(simEscolhido);
 
 
-        for (int i = 1; i <= friendshipActions.getActions().size();i++)
+        for (int i = 1; i <= friendshipActions.getTamSimsList();i++)
         {
             friendshipActions.executeAction(sim,i);
         }
