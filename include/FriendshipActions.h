@@ -29,7 +29,7 @@ class FriendshipActions : public RelationshipStories {
         void showActions()const ;
         void executeAction (Sims*,int);
         int getCurrentPontos() const { return currentPontos; };
-        inline int getTamSimsList() const { return actions.size(); } ;
+        inline int getTamActions() const { return actions.size(); } ;
 
     private:
 

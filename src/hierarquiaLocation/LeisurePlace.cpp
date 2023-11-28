@@ -41,11 +41,6 @@ void LeisurePlace::setSimsList(const vector<Sims> &simsList)
     this->simsList = simsList;
 }
 
-vector<Sims> LeisurePlace::getSimsList() const
-{
-    return simsList;
-}
-
 void LeisurePlace::setFriendshipActions(const FriendshipActions& friendshipActions)
 {
     this->friendshipActions = friendshipActions;
@@ -98,7 +93,7 @@ void LeisurePlace::socialize(Sims *sim)
         sim->fazerApresentacaoAgradavel(simEscolhido);
 
 
-        for (int i = 1; i <= friendshipActions.getTamSimsList();i++)
+        for (int i = 1; i <= friendshipActions.getTamActions();i++)
         {
             friendshipActions.executeAction(sim,i);
         }
@@ -153,14 +148,17 @@ bool LeisurePlace::operator!() const
     // Implementação baseada na ausência da lista de Sims
     return simsList.empty();
 }
+void LeisurePlace::showSimsList() const {
 
+    for (size_t i = 0; i < simsList.size(); ++i) {
+        cout << i + 1 << ". " << simsList[i] << "\n";
+    }
+}
 ostream &operator<<(ostream &out, const LeisurePlace &leisurePlace)
 {
     out << static_cast<const Building &>(leisurePlace) // Chama o operador << da classe base Building
        << "\nSims List: ";
-        for (size_t i = 0; i < leisurePlace.getSimsList().size(); ++i) {
-            out << i + 1 << ". " << leisurePlace.getSimsList()[i] << "\n";
-        }
+        leisurePlace.showSimsList();
        out<< "\n Ações de amizade: " << leisurePlace.friendshipActions
        << "\n Ações românticas: " << leisurePlace.romanticActions;
     return out;

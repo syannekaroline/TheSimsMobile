@@ -291,7 +291,7 @@ Sem o diagrama UML, a saída do programa e o vídeo, o trabalho não será avali
             void showActions()const ;
             void executeAction (Sims*,int);
             int getCurrentPontos() const { return currentPontos; };
-            inline int getTamSimsList() const { return actions.size(); } ;
+            inline int getTamActions() const { return actions.size(); } ;
 
         private:
 
@@ -468,9 +468,9 @@ Sem o diagrama UML, a saída do programa e o vídeo, o trabalho não será avali
 
             // Métodos get e set
             void setSimsList(const vector<Sims> &);
-            vector<Sims> getSimsList() const;
             void setFriendshipActions(const FriendshipActions& );
             void setRomanticActions(const RomanticActions&);
+            void showSimsList() const;
             FriendshipActions getFriendshipActions() const{return friendshipActions;};
             // Método específico
             void socialize(Sims*);
@@ -486,7 +486,6 @@ Sem o diagrama UML, a saída do programa e o vídeo, o trabalho não será avali
             FriendshipActions friendshipActions;
             RomanticActions romanticActions;
     };
-
 //// Mostrar implementação de método que especializa a derivada
  /// Mostrar reaproveitamente de código da base
 
@@ -1522,23 +1521,24 @@ Sem o diagrama UML, a saída do programa e o vídeo, o trabalho não será avali
                     
                     return out;
                 }
+
                 ostream &operator<<(ostream &out, const Workplace &workplace)
                 {
                     out << static_cast<const Building &>(workplace) // Chama o operador << da classe base Building
                     << "\nStories Career: " << workplace.careerStorie;
                     return out;
                 }
+                
                 ostream &operator<<(ostream &out, const LeisurePlace &leisurePlace)
                 {
                     out << static_cast<const Building &>(leisurePlace) // Chama o operador << da classe base Building
                     << "\nSims List: ";
-                        for (size_t i = 0; i < leisurePlace.getSimsList().size(); ++i) {
-                            out << i + 1 << ". " << leisurePlace.getSimsList()[i] << "\n";
-                        }
+                        leisurePlace.showSimsList();
                     out<< "\n Ações de amizade: " << leisurePlace.friendshipActions
                     << "\n Ações românticas: " << leisurePlace.romanticActions;
                     return out;
                 }
+                
 //// Para cada classe do seu projeto criar pelo menos dois constructores, 
  //sendo um o constructor de cópia 
  ////Mostrar uso de reaproveitamento de código da base na derivada

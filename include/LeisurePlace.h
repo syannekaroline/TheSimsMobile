@@ -22,12 +22,13 @@ class LeisurePlace : public Building
 
         // Métodos get e set
         void setSimsList(const vector<Sims> &);
-        vector<Sims> getSimsList() const;
         void setFriendshipActions(const FriendshipActions& );
         void setRomanticActions(const RomanticActions&);
+        void showSimsList() const;
+        FriendshipActions getFriendshipActions() const{return friendshipActions;};
         // Método específico
         void socialize(Sims*);
-        
+
         // Operadores
         const LeisurePlace &operator=(const LeisurePlace &);
         bool operator==(const LeisurePlace &) const;
