@@ -351,7 +351,7 @@ int main()
   map<int,string> capitulosAmizade = {{10, "Amizade Musical"}, {20, "Entusiastas do Vinil"}, {30, "Apreciadores Acusticos"},{40,"Combo do coral"}};
   //nívei 1 e 2.1
   cout<<"\n+ Amizades  -------------------------+\n";
-  RelationshipStories Amizade("Trilha Sonora da Alma", "Uma história de Amizade","Dois amigos se unem pelo amor à musica",capitulosAmizade,meuSim.getNome());
+  RelationshipStories amizade("Trilha Sonora da Alma", "Uma história de Amizade","Dois amigos se unem pelo amor à musica",capitulosAmizade,meuSim.getNome());
 
   vector <Action>actionsAmizade;
   actionsAmizade.push_back({"Dividir fone de ouvido", 1, 2});
@@ -360,7 +360,7 @@ int main()
   actionsAmizade.push_back({"Brindar à Amizade", 2, 3});
 
   //nivel 3.1
-  FriendshipActions actionsAmizadeMusical(Amizade, actionsAmizade);
+  FriendshipActions actionsAmizadeMusical(amizade, actionsAmizade);
   actionsAmizadeMusical.showActions();
   cout<<actionsAmizadeMusical;
   for (int i = 1; i <= actionsAmizade.size();i++){

@@ -34,7 +34,6 @@ CareerStories::~CareerStories()
 
 }
 
-// Método para iniciar um evento padrão
 void CareerStories::iniciarEvento(Sims* sim, const eventType& type) {
     
     map<string, int> typeEvent;

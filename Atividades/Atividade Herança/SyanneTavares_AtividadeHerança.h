@@ -510,51 +510,6 @@ Sem o diagrama UML, a saída do programa e o vídeo, o trabalho não será avali
 
             return resultado.str();
         }
-        //reaproveitamento do código
-
-        DailyTasks& DailyTasks::operator=(const DailyTasks& other) {
-            if (this != &other) {
-                // Copie os atributos da missão
-                *static_cast< Quests * >( this ) = static_cast< Quests >( other );
-                endsIn = other.endsIn;
-            }
-            return *this;
-        }
-
-        bool DailyTasks::operator==(const DailyTasks& other) const {
-            // Compare os atributos da missão
-            return (endsIn == other.endsIn && static_cast< Quests >( *this ) == static_cast< Quests >( other ));
-        }
-
-        bool DailyTasks::operator!=(const DailyTasks& other) const {
-            // Use o operador == para verificar a diferença
-            return !(*this == other);
-        }
-
-        bool DailyTasks::operator!() const {
-            // Verifique se a missão expirou
-            return endsIn != Data::getDataAtual();
-        }
-
-        bool DailyTasks::hasExpired() const {
-            // Verifique se a data de término (endsIn) é anterior à data atual
-            return endsIn != Data::getDataAtual();
-        }
-        ostream& operator<<(ostream& out, const DailyTasks& dailyMission) {
-            // Exiba de forma estilizada os atributos da missão
-            if (dailyMission.hasExpired()){
-                out<<"Missão expirada.\n";
-                return out;
-            }
-            out << static_cast< Quests>( dailyMission );
-            out << "| Data: ";
-            dailyMission.showEndsIn();
-            out << "\n| Atualiza em: 🕗 "<< dailyMission.tempoRestanteAteFinalDoDia();
-            out << "\n+-----------------------+\n";
-
-
-            return out;
-        }
 
          ////Classe 2 - GeneralMission
         void GeneralMissions::completed()
@@ -579,55 +534,13 @@ Sem o diagrama UML, a saída do programa e o vídeo, o trabalho não será avali
             return;
         }
 
-        /// reutilização
-
-        void GeneralMissions::setDescription(const string& description) {
-            this->description = Quests::limitarTamanhoString(description);
-        }
-
-        void GeneralMissions::setSubtitle(const string& subtitle) {
-            this->subtitle = Quests::limitarTamanhoString(subtitle);
-        }
-
-        GeneralMissions& GeneralMissions::operator=(const GeneralMissions& other) {
-            if (this != &other) {
-                *static_cast< Quests * >( this ) = static_cast< Quests >( other );
-                description = other.description;
-                subtitle = other.subtitle;
-            }
-            return *this;
-        }
-
-        bool GeneralMissions::operator==(const GeneralMissions& other) const {
-            return (static_cast< Quests >( *this ) == static_cast< Quests >( other ) 
-            && description == other.description 
-            && subtitle == other.subtitle);
-        }
-
-        bool GeneralMissions::operator!=(const GeneralMissions& other) const {
-            return !(*this == other);
-        }
-
-        bool GeneralMissions::operator!() const {
-            return Quests::operator!();
-        }
-
-        ostream& operator<<(ostream& out, const GeneralMissions& generalMissions) {
-            out << "| -=-=-= General Mission-=-=-=\n";
-            out << static_cast<const Quests&>(generalMissions);  // Mostra os atributos da classe base
-            out << "| " << generalMissions.getDescription() << "\n";
-            out << "| Descrição: " << generalMissions.getSubtitle() << "\n";
-            out << "+-----------------------+\n";
-            return out;
-        }
-
     //// Hierarquia 2 - Stories
 
          ////Classe 1 - CarrerStories
 
         // Método para iniciar um evento padrão
-        void CareerStories::iniciarEvento(Sims* sim, const eventType& type)
-        { 
+        void CareerStories::iniciarEvento(Sims* sim, const eventType& type) {
+            
             map<string, int> typeEvent;
             int points = 0;
             int pointsMaxEvent = (type == QUICKSHIFT)? 15: 60;
@@ -650,6 +563,17 @@ Sem o diagrama UML, a saída do programa e o vídeo, o trabalho não será avali
                 int choice;
                 cout << "Insira a ação que deseja executar:";
                 cin >> choice;
+
+                // Verificar se a entrada é um número
+                if (cin.fail()) {
+                    cin.clear(); // Limpar o sinal de falha
+                    cin.ignore(INT_MAX, '\n'); // Descartar a entrada inválida
+                    cout << VERMELHO << "Entrada inválida. Insira um número. Tente novamente.\n" << RESET;
+                    continue; // Pular para a próxima iteração do loop
+                }
+
+                // Restaurar o buffer do teclado no caso de uma entrada válida
+                cin.ignore(INT_MAX, '\n');
 
                 if (choice == -1) {
                     cout << "Evento interrompido\n";
@@ -692,49 +616,6 @@ Sem o diagrama UML, a saída do programa e o vídeo, o trabalho não será avali
                 pontosDeCarreira = 0;
             }
         }
-        ///reutilização da base
-
-        // Operador de atribuição
-        CareerStories& CareerStories::operator=(const CareerStories& other) {
-            if (this != &other)
-            {
-                *static_cast<Stories*>(this) = static_cast<Stories>(other);
-                worker = other.worker;
-                workplace = other.workplace;
-                actions = other.actions;
-            }
-            return *this;
-        }
-
-        // Operador de comparação de igualdade
-        bool CareerStories::operator==(const CareerStories& other) const {
-            return static_cast< Stories >( *this ) == static_cast< Stories >( other ) &&
-            worker == other.worker && workplace == other.workplace;
-        }
-
-        // Operador de comparação de desigualdade
-        bool CareerStories::operator!=(const CareerStories& other) const {
-            return !(*this == other);
-        }
-
-        // Operador lógico de negação
-        bool CareerStories::operator!() const {
-            return worker.empty() && workplace.empty();
-        }
-
-        // Operador de saída
-        ostream& operator<<(ostream& out, const CareerStories& story) {
-            out << static_cast<const Stories&>(story);  // Chamando o operador de saída da classe base
-            out << "| Current Pontos de Carreira no capítulo: " << story.pontosDeCarreira << "\n";
-            out << "| Sim: " << story.worker << "\n";
-            out << "| local: " << story.workplace << "\n";
-
-            out << "Actions:\n";
-            for (const auto& action : story.actions) {
-                out << "- " << action << "\n";
-            }
-            return out;
-        }    
 
         ////Classe 1.1 - FriendshipsActions
         void FriendshipActions::showActions() const {
@@ -769,13 +650,14 @@ Sem o diagrama UML, a saída do programa e o vídeo, o trabalho não será avali
         }        
 
         ////Classe 2.2 - RomanticStories
+        // Método para iniciar um evento romântico
         void RomanticActions::startEvent(Sims* sim) {
             int points = 0;
-            if (sim->getNome() != pair){
+            if (sim->getNomeCompleto() != pair){
                 resetParte();// reinicia os capítulos caso necessário; 
-                pair = sim->getNome();
-                cout<<getSimInvolved()<<" ❤️ "<<pair<<"\n";
+                pair = sim->getNomeCompleto();
             }
+            cout<<getSimInvolved()<<" ❤️ "<< pair <<"\n";
             while (true) {
                 // Exibir menu de ações
                 cout<<"\n+----------------------------------------+\n";
@@ -789,6 +671,17 @@ Sem o diagrama UML, a saída do programa e o vídeo, o trabalho não será avali
                 int choice;
                 cout << "Insira a ação que deseja executar:";
                 cin >> choice;
+
+                // Verificar se a entrada é um número
+                if (cin.fail()) {
+                    cin.clear(); // Limpar o sinal de falha
+                    cin.ignore(INT_MAX, '\n'); // Descartar a entrada inválida
+                    cout << VERMELHO << "Entrada inválida. Insira um número. Tente novamente.\n" << RESET;
+                    continue; // Pular para a próxima iteração do loop
+                }
+
+                // Restaurar o buffer do teclado no caso de uma entrada válida
+                cin.ignore(INT_MAX, '\n');
 
                 if (choice == -1) {
                     break; // Finalizar o evento
@@ -823,6 +716,7 @@ Sem o diagrama UML, a saída do programa e o vídeo, o trabalho não será avali
                         break;
                     default:
                         cout <<VERMELHO<< "Escolha inválida. Tente novamente.\n";
+                        break;
                 }
                 cout<<RESET;
                 cout<<"\nPontos de evento:  ⭐ "<<points<<"\n";
